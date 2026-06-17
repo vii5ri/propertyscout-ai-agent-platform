@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PropertyScout AI Agent Platform — รายงานสรุปโปรเจกต์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif; background: #F2EDE4; color: #211E1A; font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── Top nav (lang switch) ── */
+  .topbar { position: sticky; top: 0; z-index: 50; background: rgba(242,237,228,.92); backdrop-filter: blur(8px); border-bottom: 1px solid #E3DACB; }
+  .topbar-inner { max-width: 1040px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 14px; }
+  .topbar-mark { width: 30px; height: 30px; border-radius: 8px; background: #0E9E78; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .lang-switch { display: flex; gap: 6px; }
+  .lang-switch a { border: 1.5px solid #C9BEA8; border-radius: 999px; padding: 6px 16px; font-size: 12.5px; font-weight: 700; text-decoration: none; color: #6B655C; background: #fff; }
+  .lang-switch a.active { background: #211E1A; color: #EFE9DF; border-color: #211E1A; }
+
+  .page { max-width: 1040px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Hero ── */
+  .hero { background: #211E1A; color: #EFE9DF; border-radius: 0 0 28px 28px; padding: 56px 24px 64px; margin-bottom: 8px; }
+  .hero-inner { max-width: 1040px; margin: 0 auto; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(14,158,120,.18); color: #5BE0B3; border: 1px solid rgba(14,158,120,.35); border-radius: 999px; padding: 5px 14px; font-size: 12px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; letter-spacing: .04em; margin-bottom: 22px; }
+  .hero h1 { font-size: 36px; font-weight: 800; line-height: 1.25; margin-bottom: 14px; max-width: 760px; }
+  .hero p.lead { font-size: 16px; opacity: .72; max-width: 640px; margin-bottom: 28px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 28px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); }
+  .hero-meta-item .k { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; opacity: .5; font-family: 'IBM Plex Mono', monospace; margin-bottom: 4px; }
+  .hero-meta-item .v { font-size: 14px; font-weight: 700; }
+
+  /* ── Sections ── */
+  section { padding: 56px 0; border-bottom: 1px solid #E3DACB; }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow { font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #0E9E78; font-family: 'IBM Plex Mono', monospace; margin-bottom: 10px; }
+  h2 { font-size: 25px; font-weight: 800; margin-bottom: 8px; }
+  .section-sub { font-size: 14.5px; color: #6B655C; max-width: 680px; margin-bottom: 28px; }
+
+  /* ── Cards / grids ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .card { background: #fff; border: 1px solid #E3DACB; border-radius: 16px; padding: 20px; }
+  .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13.5px; color: #6B655C; }
+  .card .icon { width: 38px; height: 38px; border-radius: 10px; background: #F2EDE4; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+
+  /* ── Pipeline agents ── */
+  .pipeline { display: flex; flex-direction: column; gap: 10px; }
+  .agent-row { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid #E3DACB; border-radius: 14px; padding: 14px 18px; }
+  .agent-num { width: 34px; height: 34px; border-radius: 10px; background: #211E1A; color: #5BE0B3; font-family: 'IBM Plex Mono', monospace; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .agent-name { font-weight: 800; font-size: 14px; min-width: 150px; flex: 0 0 auto; }
+  .agent-name span { display: block; font-size: 11px; font-weight: 600; color: #0E9E78; font-family: 'IBM Plex Mono', monospace; letter-spacing: .06em; }
+  .agent-desc { font-size: 13px; color: #6B655C; flex: 1; }
+
+  /* ── Stack list ── */
+  .stack-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid #EDE8E0; }
+  .stack-item:last-child { border-bottom: none; }
+  .stack-icon { width: 44px; height: 44px; border-radius: 12px; background: #E4F4EE; color: #0A6B52; display: flex; align-items: center; justify-content: center; font-size: 20px; flex: 0 0 auto; }
+  .stack-txt h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .stack-txt p { font-size: 13.5px; color: #6B655C; }
+  .stack-txt .tag { display: inline-block; margin-top: 6px; background: #F2EDE4; color: #8B8475; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; margin-right: 4px; }
+
+  /* ── KPI ── */
+  .kpi { background: #fff; border: 1px solid #E3DACB; border-radius: 14px; padding: 18px; text-align: center; }
+  .kpi .val { font-size: 30px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; color: #0E9E78; }
+  .kpi .lbl { font-size: 11.5px; color: #8B8475; margin-top: 4px; }
+
+  /* ── Listing table ── */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #E3DACB; font-size: 13px; margin-top: 16px; }
+  thead th { background: #211E1A; color: #EFE9DF; font-size: 11px; font-weight: 700; text-align: left; padding: 10px 14px; text-transform: uppercase; letter-spacing: .06em; }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid #EDE8E0; vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #FAF7F3; }
+  .pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 11.5px; font-weight: 700; }
+  .pill.pass { background: #DCFAEF; color: #0A6B52; }
+  .grade { font-weight: 800; font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── Case study ── */
+  .case-box { background: #fff; border: 1px solid #E3DACB; border-radius: 18px; overflow: hidden; margin-top: 24px; }
+  .case-head { background: #211E1A; color: #EFE9DF; padding: 18px 22px; }
+  .case-head .title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .case-head .meta { font-size: 12px; opacity: .6; font-family: 'IBM Plex Mono', monospace; }
+  .case-body { padding: 22px; }
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  .ba-box { border-radius: 12px; padding: 16px; }
+  .ba-box.before { background: #FBF0ED; border: 1px solid rgba(212,91,60,.25); }
+  .ba-box.after { background: #E4F4EE; border: 1px solid rgba(14,158,120,.25); }
+  .ba-label { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+  .ba-box.before .ba-label { color: #D45B3C; }
+  .ba-box.after .ba-label { color: #0A6B52; }
+  .ba-box p { font-size: 13.5px; line-height: 1.7; }
+  .faq-mini { border-left: 3px solid #0E9E78; padding-left: 12px; margin-bottom: 10px; }
+  .faq-mini .q { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .faq-mini .a { font-size: 12.5px; color: #6B655C; }
+
+  /* ── Cost table ── */
+  .cost-table th, .cost-table td { text-align: left; }
+  .cost-table .num { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+  .note-box { background: #FFFAED; border: 1px solid rgba(201,149,40,.3); border-radius: 12px; padding: 16px 18px; margin-top: 16px; font-size: 13.5px; color: #5C4200; line-height: 1.7; }
+  .note-box b { color: #8A5C00; }
+
+  /* ── Timeline / who-how ── */
+  .timeline { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item { display: flex; gap: 16px; }
+  .tl-marker { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+  .tl-dot { width: 12px; height: 12px; border-radius: 50%; background: #0E9E78; margin-top: 4px; }
+  .tl-line { width: 2px; flex: 1; background: #E3DACB; margin: 4px 0; }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-content { padding-bottom: 28px; }
+  .tl-content h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+  .tl-content p { font-size: 13.5px; color: #6B655C; }
+
+  /* ── Impact list ── */
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .impact-card { border-radius: 14px; padding: 20px; }
+  .impact-card.good { background: #E4F4EE; border: 1px solid rgba(14,158,120,.25); }
+  .impact-card.watch { background: #FFFAED; border: 1px solid rgba(201,149,40,.3); }
+  .impact-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .impact-card.good h3 { color: #0A6B52; }
+  .impact-card.watch h3 { color: #8A5C00; }
+  .impact-card ul { padding-left: 18px; font-size: 13.5px; color: #4A4438; line-height: 1.9; }
+
+  /* ── Footer ── */
+  .footer { padding: 40px 0 20px; text-align: center; font-size: 12px; color: #8B8475; }
+
+  @media (max-width: 760px) {
+    .grid-2, .grid-3, .grid-4, .impact-grid, .before-after { grid-template-columns: 1fr; }
+    .agent-row { flex-wrap: wrap; }
+    .agent-name { min-width: 0; }
+    .hero h1 { font-size: 28px; }
+  }
+
+  @media print {
+    .topbar { display: none; }
+    .hero { border-radius: 0; }
+    section { break-inside: avoid; border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">
+        <div class="topbar-mark">PS</div>
+        PropertyScout AI Agent Platform
+      </div>
+      <div class="lang-switch">
+        <a href="report_th.html" class="active">ไทย</a>
+        <a href="report_en.html">English</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">● รายงานสำหรับการประชุม</div>
+      <h1>ระบบ AI ตรวจสอบและปรับปรุง Listing อสังหาริมทรัพย์ แบบอัตโนมัติ ทั้งภาษาไทยและอังกฤษ</h1>
+      <p class="lead">PropertyScout AI Agent Platform คือ "Virtual Office" จำลอง ที่มี AI agent 11 ตัว ทำงานร่วมกันตั้งแต่ดึงข้อมูล listing ไปจนถึงสร้างเนื้อหาใหม่ ตรวจสอบคุณภาพ และให้คะแนน — เพื่อเพิ่มอันดับการค้นหาบน Google (SEO) และเพิ่มโอกาสที่ AI แชทอย่าง ChatGPT, Perplexity, Gemini จะดึงข้อมูลไปแสดง (AEO)</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="k">วันที่จัดทำ</div>
+          <div class="v">11 มิถุนายน 2026</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">สถานะ</div>
+          <div class="v">ทดสอบสำเร็จ — 3 listing ตัวอย่าง</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">โมเดล AI ที่ใช้</div>
+          <div class="v">Claude (Anthropic)</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">ภาษา Output</div>
+          <div class="v">ไทย + อังกฤษ ทุกชิ้น</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- ============ 1. OVERVIEW ============ -->
+    <section id="overview">
+      <div class="eyebrow">01 — ภาพรวม</div>
+      <h2>ทำไมต้องมีระบบนี้?</h2>
+      <p class="section-sub">จากการตรวจ listing 20 รายการแรกบน PropertyScout.co.th พบปัญหาเชิงระบบหลายอย่างที่ส่งผลต่อทั้งอันดับ SEO และความน่าเชื่อถือของประกาศ</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="icon">⚠️</div>
+          <h3>ปัญหาที่พบ (จากตัวอย่าง 20 listing)</h3>
+          <p>
+            • 20/20 ไม่มีค่าส่วนกลาง (CAM) ค่าน้ำ ค่าไฟ<br>
+            • 13/20 ไม่มีชื่อนักพัฒนาโครงการ (ลด trust signal)<br>
+            • 15/20 หัวข้อ/ชื่อประกาศยังไม่ใช้ keyword ที่คนค้นหาจริง<br>
+            • 8/20 ระยะทาง BTS/MRT หรือชื่อสถานีไม่ถูกต้อง<br>
+            • 0/20 มี FAQ schema สำหรับ AI search
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>เป้าหมายของระบบ</h3>
+          <p>
+            • วิเคราะห์ listing ทุกตัวอัตโนมัติ ผ่าน AI 11 agent<br>
+            • เติมข้อมูลที่ขาด + ตรวจสอบความถูกต้อง<br>
+            • เขียน title, headline, description, FAQ ใหม่ — ภาษาไทยและอังกฤษ<br>
+            • ให้คะแนนคุณภาพ (PASS / BORDERLINE / FAIL) พร้อม priority action<br>
+            • ส่งออกเป็น JSON + CSV ให้ทีม content นำไปใช้ต่อได้ทันที
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. PIPELINE ============ -->
+    <section id="pipeline">
+      <div class="eyebrow">02 — ระบบทำงานอย่างไร</div>
+      <h2>Pipeline ของ AI Agent ทั้ง 11 ตัว</h2>
+      <p class="section-sub">แต่ละ listing จะถูกส่งผ่าน agent ทั้ง 11 ตัวตามลำดับ เปรียบเสมือนทีมงานเสมือนจริง (Virtual Office) ที่แต่ละคนรับผิดชอบงานของตัวเอง แล้วส่งต่อให้คนถัดไป</p>
+
+      <div class="pipeline">
+        <div class="agent-row"><div class="agent-num">1</div><div class="agent-name">KANYA <span>INTAKE</span></div><div class="agent-desc">ดึงข้อมูลจากหน้า listing — ชื่อ ประเภท ราคา พื้นที่ ชั้น ห้องนอน/น้ำ จำนวนรูป วิดีโอ และตรวจหา listing ที่อาจซ้ำกัน</div></div>
+        <div class="agent-row"><div class="agent-num">2</div><div class="agent-name">PANSA <span>ENRICH</span></div><div class="agent-desc">ค้นข้อมูลที่ขาด — ชื่อนักพัฒนา ปีสร้าง จำนวนยูนิต ระยะทางถึง BTS/MRT ห้าง โรงพยาบาล โรงเรียน และสิ่งอำนวยความสะดวกของโครงการ</div></div>
+        <div class="agent-row"><div class="agent-num">3</div><div class="agent-name">SUWAN <span>AUDIT</span></div><div class="agent-desc">ประเมินความสมบูรณ์ของข้อมูลเบื้องต้น และ flag listing ที่มีรูปน้อย / ไม่มีค่า CAM / ไม่มีชื่อนักพัฒนา</div></div>
+        <div class="agent-row"><div class="agent-num">4</div><div class="agent-name">PRIYA <span>RESEARCH</span></div><div class="agent-desc">เปรียบเทียบราคาต่อ ตร.ม. กับตลาด ดูคู่แข่งในย่านเดียวกัน และค่า CAM ที่เหมาะสมสำหรับโครงการประเภทนี้</div></div>
+        <div class="agent-row"><div class="agent-num">5</div><div class="agent-name">NIRAN <span>FACTCHECK</span></div><div class="agent-desc">ตรวจสอบความสมเหตุสมผลของระยะทาง BTS/MRT ชื่อสถานี ปีสร้าง จำนวนชั้น และราคาต่อ ตร.ม. ที่ผิดปกติ</div></div>
+        <div class="agent-row"><div class="agent-num">6</div><div class="agent-name">TAWAN <span>SEO</span></div><div class="agent-desc">ปรับ title และ keyword ให้ติดอันดับ Google ทั้งภาษาไทยและอังกฤษ — ใช้คำที่คนค้นหาจริง เช่น "คอนโดให้เช่าใกล้ BTS"</div></div>
+        <div class="agent-row"><div class="agent-num">7</div><div class="agent-name">WICHAI <span>COPYWRITER</span></div><div class="agent-desc">เขียน headline, description, meta description ใหม่ทั้ง TH/EN โดยอิงข้อเท็จจริง ไม่ใช้คำคลุมเครือ เช่น "luxury" โดยไม่มีหลักฐาน</div></div>
+        <div class="agent-row"><div class="agent-num">8</div><div class="agent-name">DAOW <span>AEO</span></div><div class="agent-desc">สร้าง schema markup และชุด FAQ (TH/EN) เพื่อให้ ChatGPT, Perplexity, Gemini ดึงข้อมูลไปตอบคำถามผู้ใช้ได้ง่ายขึ้น</div></div>
+        <div class="agent-row"><div class="agent-num">9</div><div class="agent-name">PLOYCHIT <span>OPTIMISE</span></div><div class="agent-desc">รวมผลจาก agent 6-8 ให้ keyword TH/EN ตรงกัน, FAQ ครบทุกภาษา และเรียงลำดับ issue ที่สำคัญที่สุดก่อน</div></div>
+        <div class="agent-row"><div class="agent-num">10</div><div class="agent-name">PHITCHAYA <span>SCORE</span></div><div class="agent-desc">คำนวณคะแนนสุดท้าย จาก completeness × 0.4 + accuracy × 0.3 + appeal × 0.3 และให้เกรด A–D</div></div>
+        <div class="agent-row"><div class="agent-num">11</div><div class="agent-name">FIAT <span>PUBLISH</span></div><div class="agent-desc">ตัดสินใจ — PASS เผยแพร่ได้ทันที / BORDERLINE ต้องแก้ priority issue ก่อน / FAIL ส่งกลับไปเริ่มใหม่</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 3. WHAT IT'S MADE OF ============ -->
+    <section id="stack">
+      <div class="eyebrow">03 — ทำมาจากอะไร</div>
+      <h2>เทคโนโลยีและส่วนประกอบของระบบ</h2>
+      <p class="section-sub">ระบบทั้งหมดถูกออกแบบและพัฒนาโดยใช้ Claude (Cowork) เป็นเครื่องมือหลัก ประกอบด้วย 4 ส่วนหลัก</p>
+
+      <div class="stack-item">
+        <div class="stack-icon">🧠</div>
+        <div class="stack-txt">
+          <h3>AI Model — Claude (Anthropic)</h3>
+          <p>สมองของระบบ ใช้วิเคราะห์หน้า listing, ค้นคว้าข้อมูลทำเล, เขียน copy และให้คะแนน — รองรับทั้งภาษาไทยและอังกฤษในขั้นตอนเดียว</p>
+          <span class="tag">claude-opus-4-8 (คุณภาพสูงสุด)</span>
+          <span class="tag">claude-haiku-4-5 (เร็ว/ประหยัด — ตัวเลือก)</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🐍</div>
+        <div class="stack-txt">
+          <h3>Automation Runner (Python)</h3>
+          <p>สคริปต์ <span class="mono">run_agents.py</span> อ่านรายการ URL จากไฟล์ CSV → ดึงเนื้อหาหน้า listing แต่ละหน้า → ส่งให้ Claude วิเคราะห์ผ่าน pipeline 11 agent → บันทึกผลลัพธ์</p>
+          <span class="tag">Python + Anthropic API</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📊</div>
+        <div class="stack-txt">
+          <h3>Output Files (JSON + CSV)</h3>
+          <p><span class="mono">agent_results.json</span> — ข้อมูลครบทุกมิติสำหรับระบบ · <span class="mono">ps_summary.csv</span> — สรุปคะแนนสำหรับผู้บริหาร · <span class="mono">ps_details.csv</span> — เนื้อหา TH/EN พร้อมใช้สำหรับทีม content</p>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🖥️</div>
+        <div class="stack-txt">
+          <h3>Virtual Office Dashboard (Pixel UI)</h3>
+          <p>หน้าเว็บสไตล์ pixel-art แสดง agent ทั้ง 11 ตัวทำงานแบบ real-time ในออฟฟิศจำลอง พร้อมหน้า "ผล Listing" สำหรับดูคะแนน เนื้อหาที่สร้างใหม่ และ priority action ของแต่ละ listing</p>
+          <span class="tag">HTML / React (.jsx)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. RESULTS ============ -->
+    <section id="results">
+      <div class="eyebrow">04 — ผลลัพธ์ตัวอย่าง</div>
+      <h2>ผลการทดสอบกับ 3 Listing จริง</h2>
+      <p class="section-sub">รันระบบกับ listing ตัวอย่าง 3 รายการ (1 คอนโดเพลินจิต, 1 คอนโดติดทะเลพัทยา, 1 คอนโด 4 นอนชะอำ) — ใช้เวลาวิเคราะห์ทั้งหมดไม่กี่นาที</p>
+
+      <div class="grid-4">
+        <div class="kpi"><div class="val">3</div><div class="lbl">Listing ที่วิเคราะห์</div></div>
+        <div class="kpi"><div class="val">3</div><div class="lbl">PASS (เกรด B+)</div></div>
+        <div class="kpi"><div class="val">81.7</div><div class="lbl">คะแนนเฉลี่ย / 100</div></div>
+        <div class="kpi"><div class="val">1</div><div class="lbl">Systemic issue พบในทั้ง 3 listing</div></div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Listing</th><th>ทำเล</th><th>Completeness</th><th>Accuracy</th><th>Appeal</th><th>รวม</th><th>เกรด</th><th>ผล</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>คอนโด 1 นอน Noble Ploenchit</td><td>เพลินจิต, กรุงเทพฯ</td><td>75</td><td>92</td><td>88</td><td class="grade">84</td><td class="grade">B+</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>คอนโดติดทะเล Grand Florida</td><td>นาจอมเทียน, พัทยา</td><td>78</td><td>88</td><td>84</td><td class="grade">83</td><td class="grade">B+</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>คอนโด 4 นอน Dusit</td><td>ชะอำ, เพชรบุรี</td><td>70</td><td>84</td><td>82</td><td class="grade">78</td><td class="grade">B+</td><td><span class="pill pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">
+        <b>Systemic issue ที่พบ:</b> ทั้ง 3/3 listing ไม่มีข้อมูลค่าส่วนกลาง (CAM) ค่าน้ำ และค่าไฟ — ระบบ flag ให้เป็น priority action อันดับแรกของทุก listing เพราะมีผลโดยตรงต่อ trust และ accuracy score
+      </div>
+
+      <!-- Case study -->
+      <div class="case-box">
+        <div class="case-head">
+          <div class="title">ตัวอย่าง: คอนโด Noble Ploenchit (1 นอน 61 ตร.ม. ชั้น 17)</div>
+          <div class="meta">คะแนนรวม 84/100 · เกรด B+ · PASS</div>
+        </div>
+        <div class="case-body">
+          <div class="before-after">
+            <div class="ba-box before">
+              <div class="ba-label">ก่อนปรับปรุง — ปัญหาที่พบ</div>
+              <p>• ไม่ระบุค่าส่วนกลาง ค่าไฟ ค่าน้ำ<br>• ไม่มี FAQ สำหรับ AI search<br>• Title ยังไม่ใช้ keyword ที่คนค้นหาจริง ("เช่าคอนโด Noble Ploenchit")</p>
+            </div>
+            <div class="ba-box after">
+              <div class="ba-label">หลังปรับปรุง — AI สร้างให้</div>
+              <p><b>EN:</b> "Modern 1BR just 120m from BTS Phloen Chit in Bangkok's prime CBD"<br><b>TH:</b> "คอนโด 1 นอน ห่าง BTS เพลินจิต เพียง 120 เมตร ใจกลางเมือง"</p>
+            </div>
+          </div>
+          <div class="faq-mini">
+            <div class="q">BTS เพลินจิต อยู่ห่างจากตึกแค่ไหน? / How far is BTS Phloen Chit?</div>
+            <div class="a">BTS เพลินจิตอยู่ห่างเพียง 120 เมตร เดินประมาณ 2 นาที เชื่อมต่อสยาม อโศก และทุกสายของ BTS ได้สะดวก</div>
+          </div>
+          <div class="faq-mini">
+            <div class="q">ชาวต่างชาติเช่าหรือซื้อ Noble Ploenchit ได้ไหม? / Can foreigners rent or buy here?</div>
+            <div class="a">ได้ โครงการเป็นฟรีโฮลด์และมีโควตาต่างชาติ เป็นที่นิยมในกลุ่มผู้เช่าและผู้ซื้อต่างชาติ</div>
+          </div>
+          <div class="faq-mini">
+            <div class="q">โครงการมีสิ่งอำนวยความสะดวกอะไรบ้าง? / What facilities are available?</div>
+            <div class="a">สระว่ายน้ำ ฟิตเนส กอล์ฟซิมูเลเตอร์ พื้นที่ทำงานร่วม สวนและบาร์บีคิว ที่จอดรถในร่ม รักษาความปลอดภัย 24 ชม.</div>
+          </div>
+          <p style="font-size:13px;color:#8B8475;margin-top:8px">ระบบยังเพิ่ม schema markup (Apartment), market comparison (902 บาท/ตร.ม. = ราคากลางของย่าน), และ investment notes สำหรับนักลงทุนต่างชาติ — ทั้งหมดนี้ออกมาในไม่กี่นาทีต่อ listing</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. COSTS ============ -->
+    <section id="costs">
+      <div class="eyebrow">05 — ค่าใช้จ่าย</div>
+      <h2>ใช้ระบบนี้ต้องจ่ายอะไรบ้าง?</h2>
+      <p class="section-sub">ค่าใช้จ่ายหลักคือค่า API ของ Claude (Anthropic) แบบ pay-as-you-go — ไม่มีค่าสมัครสมาชิกรายเดือนแยกต่างหากสำหรับการรันระบบนี้ คิดตามจำนวน listing ที่วิเคราะห์จริง</p>
+
+      <table class="cost-table">
+        <thead>
+          <tr><th>โมเดล</th><th>คุณภาพ / ความเร็ว</th><th class="num">ต้นทุนโดยประมาณ / Listing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Claude Opus 4.8</b> (ใช้อยู่ปัจจุบัน)</td><td>คุณภาพสูงสุด — เนื้อหาละเอียด วิจัยทำเลลึก</td><td class="num">$0.10 – $0.20</td></tr>
+          <tr><td>Claude Haiku 4.5</td><td>เร็วกว่า ประหยัดกว่า — เหมาะกับ listing จำนวนมาก</td><td class="num">$0.01 – $0.02</td></tr>
+        </tbody>
+      </table>
+
+      <table class="cost-table" style="margin-top:20px">
+        <thead>
+          <tr><th>จำนวน Listing</th><th class="num">ค่าใช้จ่าย (Opus)</th><th class="num">ค่าใช้จ่าย (Haiku)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>20 listings (ทดสอบรอบแรก)</td><td class="num">~$2 – $4</td><td class="num">~$0.20 – $0.40</td></tr>
+          <tr><td>100 listings</td><td class="num">~$10 – $20</td><td class="num">~$1 – $2</td></tr>
+          <tr><td>1,000 listings</td><td class="num">~$100 – $200</td><td class="num">~$10 – $20</td></tr>
+          <tr><td>5,000 listings (ทั้งเว็บโดยประมาณ)</td><td class="num">~$500 – $1,000</td><td class="num">~$50 – $100</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">
+        <b>หมายเหตุ:</b> ตัวเลขข้างต้นเป็นค่าประมาณการจาก Anthropic API pricing ขึ้นอยู่กับความยาวของเนื้อหาแต่ละหน้า listing จริง · นอกจากค่า API แล้ว ยังต้องมี (1) บัญชี Anthropic Console สำหรับสร้าง API key และ (2) เวลาทีมงานสำหรับตรวจสอบผลลัพธ์ระดับ BORDERLINE/FAIL ก่อนนำไปเผยแพร่จริง
+      </div>
+    </section>
+
+    <!-- ============ 6. FUTURE IMPACT ============ -->
+    <section id="impact">
+      <div class="eyebrow">06 — ผลกระทบในอนาคต</div>
+      <h2>ถ้านำไปใช้งานจริง จะเกิดอะไรขึ้น?</h2>
+
+      <div class="impact-grid">
+        <div class="impact-card good">
+          <h3>✅ ผลดีที่คาดว่าจะเกิดขึ้น</h3>
+          <ul>
+            <li>แก้ systemic issue ได้ทุก listing พร้อมกัน (CAM fee, ชื่อนักพัฒนา, keyword)</li>
+            <li>เพิ่มโอกาสติดอันดับ Google ด้วย title/keyword ที่อิงพฤติกรรมค้นหาจริง</li>
+            <li>เพิ่มโอกาสถูกอ้างอิงโดย ChatGPT / Perplexity / Gemini ผ่าน FAQ + schema markup (AEO)</li>
+            <li>Content ได้ทั้งภาษาไทยและอังกฤษพร้อมกัน — ไม่ต้องจ้างแปลแยก</li>
+            <li>ทีม content ทำงานเร็วขึ้น — มี draft headline/description/FAQ พร้อมใช้ทันที</li>
+            <li>scale ได้ — เพิ่ม listing ใหม่กี่รายการก็รันซ้ำได้ทันที</li>
+          </ul>
+        </div>
+        <div class="impact-card watch">
+          <h3>⚠️ สิ่งที่ต้องระวัง / เตรียมการ</h3>
+          <ul>
+            <li>ผลลัพธ์ระดับ BORDERLINE/FAIL ต้องมีคนตรวจก่อนเผยแพร่</li>
+            <li>ข้อมูลทำเล/คู่แข่งบางส่วนมาจาก training data ของ AI ควรสุ่มตรวจความถูกต้อง</li>
+            <li>ค่าใช้จ่ายแปรผันตามจำนวน listing — ควรกำหนดงบประมาณ/รอบการรันที่ชัดเจน</li>
+            <li>ต้องดูแล API key ให้ปลอดภัย (ปัจจุบันเก็บใน .env)</li>
+            <li>ควรมี process อัปเดต schema เว็บไซต์ให้รองรับ FAQ/markup ที่ AI สร้าง</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. WHO & HOW ============ -->
+    <section id="who">
+      <div class="eyebrow">07 — ใครทำ และทำอย่างไร</div>
+      <h2>กระบวนการพัฒนาโปรเจกต์นี้</h2>
+      <p class="section-sub">โปรเจกต์นี้พัฒนาโดย <b>Attaphon</b> ร่วมกับ <b>Claude (Anthropic AI)</b> ผ่าน Cowork — ใช้เวลาออกแบบและสร้างต้นแบบทั้งหมดภายในเวลาไม่กี่ชั่วโมง</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><h3>1. กำหนดปัญหาและเป้าหมาย</h3><p>วิเคราะห์ listing ตัวอย่าง 20 รายการ เพื่อหา pattern ของปัญหาที่เกิดซ้ำ (CAM fee, ชื่อนักพัฒนา, SEO keyword, FAQ)</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><h3>2. ออกแบบ Pipeline 11 Agent</h3><p>กำหนดบทบาทและ system prompt ของแต่ละ agent ให้ครอบคลุมตั้งแต่ดึงข้อมูล วิจัย เขียน copy จนถึงให้คะแนน — เขียนเป็นไฟล์ instruction (CLAUDE.md)</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><h3>3. สร้าง Automation Runner</h3><p>เขียนสคริปต์ Python ที่อ่าน CSV, ดึงข้อมูลหน้า listing, เรียก Claude API ตาม pipeline และบันทึกผลเป็น JSON/CSV</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><h3>4. สร้าง Virtual Office Dashboard</h3><p>ออกแบบหน้าเว็บ pixel-art แสดง agent ทำงานแบบ real-time พร้อมหน้าแสดงผลลัพธ์แบบ bilingual ที่ทีม content เปิดใช้งานได้ทันที</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-marker"><div class="tl-dot"></div></div>
+          <div class="tl-content"><h3>5. ทดสอบกับ Listing จริง</h3><p>รันระบบกับ listing จริง 3 รายการจากเว็บไซต์ ได้ผลลัพธ์ PASS ทั้งหมด พร้อมรายงานสำหรับการประชุมนี้</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8. NEXT STEPS ============ -->
+    <section id="next">
+      <div class="eyebrow">08 — สรุปและสิ่งที่ต้องตัดสินใจ</div>
+      <h2>ขั้นตอนถัดไป</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">1️⃣</div>
+          <h3>เลือกโมเดลและงบประมาณ</h3>
+          <p>ตัดสินใจระหว่าง Claude Opus (คุณภาพสูง) หรือ Haiku (ประหยัด) และกำหนดงบต่อรอบการรัน</p>
+        </div>
+        <div class="card">
+          <div class="icon">2️⃣</div>
+          <h3>กำหนดขอบเขต Pilot</h3>
+          <p>เลือกจำนวน listing สำหรับรอบทดสอบถัดไป (เช่น 50–100 รายการ) และทีมที่จะตรวจผล BORDERLINE/FAIL</p>
+        </div>
+        <div class="card">
+          <div class="icon">3️⃣</div>
+          <h3>วางแผนนำไปใช้จริง</h3>
+          <p>กำหนด workflow ให้ทีม content นำ output (CSV/JSON) ไปอัปเดตหน้าเว็บจริง รวมถึง schema markup และ FAQ</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    PropertyScout AI Agent Platform — รายงานจัดทำเพื่อการประชุมภายใน · 11 มิถุนายน 2026
+  </div>
+
+</body>
+</html>

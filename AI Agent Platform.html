@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Orchestration · PropertyScout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans Thai','Inter',sans-serif; background: #F2EDE4; color: #211E1A; -webkit-font-smoothing: antialiased; }
+  @keyframes agp-ping { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #DAD0C0; border-radius: 6px; border: 3px solid #F2EDE4; }
+  ::-webkit-scrollbar-thumb:hover { background: #C9BFAD; }
+
+  .agp-shell { display: flex; min-height: 100vh; }
+
+  /* sidebar */
+  .agp-side {
+    width: 232px; flex: 0 0 232px; background: #fff; border-right: 1px solid #E3DACB;
+    display: flex; flex-direction: column; padding: 20px 16px; position: sticky; top: 0; height: 100vh; gap: 6px;
+  }
+  .agp-brand { display: flex; align-items: center; gap: 11px; padding: 4px 8px 18px; }
+  .agp-mark { width: 36px; height: 36px; border-radius: 10px; background: #0E9E78; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-family: 'Inter',sans-serif; font-size: 15px; box-shadow: 0 6px 16px -6px rgba(14,158,120,.7); flex: 0 0 auto; }
+  .agp-brand-txt b { display: block; font-size: 14px; line-height: 1.15; color: #211E1A; }
+  .agp-brand-txt span { font-size: 11px; color: #8B8475; }
+  .agp-nav { border: none; background: none; cursor: pointer; display: flex; align-items: center; gap: 11px; padding: 11px 12px; border-radius: 11px; font-size: 13.5px; font-weight: 600; color: #6B655C; font-family: inherit; text-align: left; width: 100%; transition: background .15s, color .15s; }
+  .agp-nav:hover { background: #F6F2EB; }
+  .agp-nav.on { background: #E4F4EE; color: #0A6B52; }
+  .agp-nav .ico { width: 18px; height: 18px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+  .agp-side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; padding-top: 14px; border-top: 1px solid #F0EAE0; }
+  .agp-livecount { display: flex; align-items: center; gap: 9px; padding: 4px 8px; font-size: 12px; color: #6B655C; }
+  .agp-lang { display: flex; background: #ECE5D8; border-radius: 999px; padding: 3px; gap: 2px; }
+  .agp-lang button { flex: 1; border: 0; background: transparent; cursor: pointer; padding: 7px 0; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #8B8475; font-family: inherit; }
+  .agp-lang button.on { background: #fff; color: #211E1A; box-shadow: 0 2px 6px -2px rgba(40,30,15,.25); }
+
+  /* main */
+  .agp-main { flex: 1; min-width: 0; padding: 30px 34px 60px; max-width: 1320px; }
+
+  .agp-card { transition: transform .16s ease, box-shadow .16s ease; }
+
+  /* grouped nav */
+  .agp-navscroll { display: flex; flex-direction: column; gap: 2px; }
+  .agp-navgroup { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+  .agp-grouplabel { font-size: 10px; font-weight: 700; letter-spacing: .13em; color: #B3A893; text-transform: uppercase; font-family: 'IBM Plex Mono',monospace; padding: 12px 12px 5px; }
+  .agp-nav .lbl { flex: 1; }
+  .agp-badge { font-size: 11px; font-weight: 700; font-family: 'IBM Plex Mono',monospace; background: #ECE5D8; color: #8B8475; border-radius: 999px; padding: 1px 8px; min-width: 20px; text-align: center; }
+  .agp-nav.on .agp-badge { background: #0E9E78; color: #fff; }
+  .agp-badge.warn { background: #FAF1DC; color: #C99528; }
+
+  /* dark canvas (collaboration + virtual office) */
+  .agp-canvas-dark {
+    background: radial-gradient(120% 90% at 50% 0%, #2A2620 0%, #211E1A 55%, #1A1814 100%);
+    border: 1px solid #34302A; border-radius: 18px; padding: 14px; overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 18px 40px -28px rgba(0,0,0,.6);
+  }
+  .agp-canvas-foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 12px 8px 4px; border-top: 1px solid #34302A; margin-top: 8px; }
+  .agp-legend-item { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #9B9381; }
+  .agp-legend-line { width: 26px; height: 0; border-top: 2px dashed #2FC397; display: inline-block; }
+  @keyframes agp-flow { to { stroke-dashoffset: -22; } }
+  .agp-edge-flow { stroke-dasharray: 5 7; animation: agp-flow 0.9s linear infinite; }
+  @keyframes agp-glow { 0%,100% { opacity: .18; } 50% { opacity: .5; } }
+  .agp-glow { animation: agp-glow 1.9s ease-in-out infinite; }
+
+  /* collaboration layout */
+  .agp-collab-wrap { display: flex; gap: 16px; align-items: stretch; }
+  .agp-collab-side { width: 268px; flex: 0 0 268px; background: #211E1A; border: 1px solid #34302A; border-radius: 18px; padding: 20px; }
+  .agp-side-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; color: #8E8675; text-transform: uppercase; font-family: 'IBM Plex Mono',monospace; margin-bottom: 11px; }
+  .agp-collab-chip { all: unset; cursor: pointer; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; padding: 8px 11px; border-radius: 10px; background: rgba(255,255,255,.04); color: #DCD5C7; font-size: 12.5px; font-family: 'IBM Plex Sans Thai','Inter',sans-serif; }
+  .agp-collab-chip:hover { background: rgba(47,195,151,.13); }
+  .agp-side-open { all: unset; cursor: pointer; text-align: center; padding: 11px; border-radius: 11px; background: #0E9E78; color: #fff; font-size: 12.5px; font-weight: 600; font-family: 'IBM Plex Sans Thai','Inter',sans-serif; }
+  .agp-side-open:hover { background: #0A8A68; }
+
+  /* virtual office */
+  .agp-office-canvas { padding: 16px; }
+  .agp-office-floor { position: relative; width: 100%; aspect-ratio: 1100 / 680;
+    background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 40px 40px; border-radius: 12px; }
+  .agp-room { position: absolute; border: 1px solid; border-radius: 13px; background: rgba(255,255,255,.018); }
+  .agp-room-label { position: absolute; top: 9px; left: 12px; font-size: 11px; font-weight: 600; letter-spacing: .03em; font-family: 'IBM Plex Sans Thai','Inter',sans-serif; display: inline-flex; align-items: center; gap: 7px; }
+  .agp-beam-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .agp-desk { all: unset; cursor: pointer; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; }
+  .agp-desk-av { position: relative; width: 46px; height: 46px; border-radius: 13px; background: #2A2722; border: 2.5px solid; display: flex; align-items: center; justify-content: center; color: #F4EFE6; font-weight: 700; font-size: 15px; font-family: 'Inter',sans-serif; transition: box-shadow .3s; }
+  .agp-desk:hover .agp-desk-av { transform: translateY(-2px); }
+  .agp-desk-dot { position: absolute; right: -3px; bottom: -3px; width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid #211E1A; }
+  .agp-desk-name { font-size: 10.5px; color: #B9B1A1; font-family: 'IBM Plex Mono',monospace; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+
+  @media (max-width: 1000px) {
+    .agp-collab-wrap { flex-direction: column; }
+    .agp-collab-side { width: auto; flex: none; }
+  }
+
+  /* collaboration mode toggle */
+  .agp-modeseg { display: inline-flex; background: #ECE5D8; border-radius: 999px; padding: 3px; gap: 2px; }
+  .agp-modeseg button { border: 0; background: transparent; cursor: pointer; padding: 7px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #8B8475; font-family: 'IBM Plex Sans Thai','Inter',sans-serif; }
+  .agp-modeseg button.on { background: #fff; color: #211E1A; box-shadow: 0 2px 6px -2px rgba(40,30,15,.25); }
+
+  /* pixel office */
+  .agp-px-shell { padding: 12px; }
+  .agp-px-wrap { position: relative; width: 100%; aspect-ratio: 1120 / 700; border-radius: 12px; overflow: hidden; }
+  .agp-px-canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; display: block; }
+  .agp-px-overlay { position: absolute; inset: 0; width: 100%; pointer-events: none; }
+  .agp-px-zone { position: absolute; font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; color: #6B4F2E; background: rgba(247,240,225,.66); padding: 1px 6px; border-radius: 5px; white-space: nowrap; pointer-events: none; }
+  .agp-px-tag { all: unset; position: absolute; top: 0; left: 0; transform: translate(-50%,-100%); display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: auto; cursor: pointer; will-change: transform; }
+  .agp-px-tag .nm { font-size: 10px; font-weight: 700; color: #2A2722; background: rgba(247,240,225,.92); padding: 0 5px; border-radius: 5px; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,.25); transform: translateX(-50%); margin-left: 50%; }
+  .agp-px-tag .dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #211E1A; transform: translateX(-50%); margin-left: 50%; }
+  .agp-px-tag .tip { position: absolute; bottom: 100%; margin-bottom: 4px; display: none; background: #211E1A; color: #EFE9DF; font-size: 11px; font-family: 'IBM Plex Sans Thai','Inter',sans-serif; padding: 5px 9px; border-radius: 7px; white-space: nowrap; max-width: 240px; box-shadow: 0 6px 16px -6px rgba(0,0,0,.6); }
+  .agp-px-tag:hover { z-index: 10; }
+  .agp-px-tag:hover .tip { display: block; }
+  .agp-px-tag:hover .nm { background: #0E9E78; color: #fff; }
+  .agp-card:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -20px rgba(40,30,15,.55); }
+  .agp-row:hover { background: #F6F2EB; }
+
+  .agp-dash-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; align-items: start; }
+  .agp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+  @media (max-width: 1080px) { .agp-dash-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) {
+    .agp-two { grid-template-columns: 1fr; gap: 20px; }
+    .agp-shell { flex-direction: column; }
+    .agp-side { width: auto; flex: none; height: auto; position: sticky; top: 0; z-index: 40; flex-direction: row; align-items: center; padding: 10px 14px; gap: 4px; overflow-x: auto; }
+    .agp-brand { padding: 0 10px 0 4px; }
+    .agp-navscroll { flex-direction: row; gap: 4px; }
+    .agp-navgroup { flex-direction: row; gap: 4px; margin-bottom: 0; align-items: center; }
+    .agp-grouplabel { display: none; }
+    .agp-nav { width: auto; white-space: nowrap; padding: 9px 12px; }
+    .agp-nav .lbl { flex: none; }
+    .agp-side-foot { margin: 0 0 0 auto; flex-direction: row; align-items: center; border: none; padding: 0; gap: 8px; }
+    .agp-livecount { display: none; }
+    .agp-brand-txt { display: none; }
+    .agp-main { padding: 22px 16px 50px; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="agent-cards.jsx"></script>
+<script type="text/babel" src="app/data.jsx"></script>
+<script type="text/babel" src="app/sim.jsx"></script>
+<script type="text/babel" src="app/links.jsx"></script>
+<script type="text/babel" src="app/ui.jsx"></script>
+<script type="text/babel" src="app/views.jsx"></script>
+<script type="text/babel" src="app/detail.jsx"></script>
+<script type="text/babel" src="app/collab.jsx"></script>
+<script type="text/babel" src="app/office.jsx"></script>
+<script type="text/babel" src="app/pages.jsx"></script>
+<script type="text/babel" src="app/pixel.jsx"></script>
+<script type="text/babel" src="app/pixel-engine.jsx"></script>
+<script type="text/babel" src="app/results.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+const LS = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } };
+const setLS = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+
+function IconGrid() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1.5" y="1.5" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.6"/><rect x="10.5" y="1.5" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.6"/><rect x="1.5" y="10.5" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.6"/><rect x="10.5" y="10.5" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.6"/></svg>); }
+function IconTeam() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6.5" cy="6" r="2.6" stroke="currentColor" strokeWidth="1.6"/><circle cx="13" cy="7" r="2" stroke="currentColor" strokeWidth="1.6"/><path d="M2 15c0-2.5 2-4 4.5-4S11 12.5 11 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/><path d="M12 15c0-1.6.5-2.8 1.5-3.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>); }
+function IconCollab() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="4" cy="4" r="2.2" stroke="currentColor" strokeWidth="1.6"/><circle cx="14" cy="5" r="2.2" stroke="currentColor" strokeWidth="1.6"/><circle cx="9" cy="14" r="2.2" stroke="currentColor" strokeWidth="1.6"/><path d="M5.6 5.4 8 12M12.6 6.6 10 12M6 4.4h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>); }
+function IconOffice() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2.5" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.6"/><rect x="10" y="2.5" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="1.6"/><rect x="2" y="11" width="6" height="4.5" rx="1" stroke="currentColor" strokeWidth="1.6"/><rect x="10" y="9" width="6" height="6.5" rx="1" stroke="currentColor" strokeWidth="1.6"/></svg>); }
+function IconLog() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 3v12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/><path d="M4 3.5h8l-1.5 2.2L12 8H4" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/><circle cx="4" cy="15" r="1.1" fill="currentColor"/></svg>); }
+function IconSkills() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.7 3.6 3.9.5-2.9 2.7.8 3.9L9 10.9 5.5 12.7l.8-3.9L3.4 6.1l3.9-.5L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>); }
+function IconMemory() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="5" r="2.1" stroke="currentColor" strokeWidth="1.5"/><circle cx="4.5" cy="13" r="2.1" stroke="currentColor" strokeWidth="1.5"/><circle cx="13.5" cy="13" r="2.1" stroke="currentColor" strokeWidth="1.5"/><path d="M7.7 6.7 5.8 11M10.3 6.7 12.2 11M6.6 13h4.8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>); }
+function IconSettings() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="2.3" stroke="currentColor" strokeWidth="1.6"/><path d="M9 1.8v2M9 14.2v2M16.2 9h-2M3.8 9h-2M14 4l-1.4 1.4M5.4 12.6 4 14M14 14l-1.4-1.4M5.4 5.4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>); }
+function IconResults() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13.5h2.5v-5H3v5zM7.75 13.5h2.5V4.5h-2.5v9zM12.5 13.5H15V8h-2.5v5.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>); }
+
+function App() {
+  const [lang, setLang] = useState(() => LS("agp_lang", "th"));
+  const [view, setView] = useState(() => LS("agp_view", "office"));
+  const [agentId, setAgentId] = useState(() => { const v = LS("agp_agent", ""); return v || null; });
+  const sim = useSimulation();
+
+  useEffect(() => { setLS("agp_lang", lang); document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => { setLS("agp_view", view); }, [view]);
+  useEffect(() => { setLS("agp_agent", agentId || ""); }, [agentId]);
+
+  const go = (v) => { setView(v); setAgentId(null); window.scrollTo(0, 0); };
+  const openAgent = (id) => { setAgentId(id); window.scrollTo(0, 0); };
+
+  const NAV = [
+    { g: { en: "Overview", th: "ภาพรวม" }, items: [
+      { id: "dashboard", label: T.nav_dash, Ico: IconGrid },
+      { id: "team", label: T.nav_team, Ico: IconTeam, badge: TEAM.length },
+    ]},
+    { g: { en: "Workspace", th: "พื้นที่ทำงาน" }, items: [
+      { id: "collab", label: { en: "Collaboration", th: "การทำงานร่วมกัน" }, Ico: IconCollab },
+      { id: "office", label: { en: "Virtual Office", th: "ออฟฟิศเสมือน" }, Ico: IconOffice },
+    ]},
+    { g: { en: "Operations", th: "ปฏิบัติการ" }, items: [
+      { id: "log", label: { en: "Mission Log", th: "บันทึกภารกิจ" }, Ico: IconLog, badge: sim.counts.active, warn: true },
+      { id: "skills", label: { en: "Skills", th: "ทักษะรวม" }, Ico: IconSkills },
+      { id: "memory", label: { en: "Memory Graph", th: "กราฟความจำ" }, Ico: IconMemory },
+    ]},
+    { g: { en: "Results", th: "ผลวิเคราะห์" }, items: [
+      { id: "results", label: { en: "Listing Results", th: "ผล Listing" }, Ico: IconResults },
+    ]},
+    { g: { en: "System", th: "ระบบ" }, items: [
+      { id: "settings", label: { en: "Settings", th: "ตั้งค่า" }, Ico: IconSettings },
+    ]},
+  ];
+
+  const renderView = () => {
+    if (agentId) return <AgentDetail agent={TEAM_BY_ID[agentId]} live={sim.agents[agentId]} sim={sim} lang={lang} onBack={() => setAgentId(null)} onAgent={openAgent} />;
+    switch (view) {
+      case "team": return <Roster sim={sim} lang={lang} onAgent={openAgent} />;
+      case "collab": return <CollaborationView sim={sim} lang={lang} onAgent={openAgent} />;
+      case "office": return <PixelOffice sim={sim} lang={lang} onAgent={openAgent} />;
+      case "log": return <MissionLog sim={sim} lang={lang} onAgent={openAgent} />;
+      case "skills": return <SkillsView lang={lang} onAgent={openAgent} />;
+      case "memory": return <MemoryGraph lang={lang} onAgent={openAgent} />;
+      case "settings": return <Settings sim={sim} lang={lang} setLang={setLang} />;
+      case "results": return <ResultsView lang={lang} />;
+      default: return <Dashboard sim={sim} lang={lang} onAgent={openAgent} />;
+    }
+  };
+
+  return (
+    <div className="agp-shell">
+      <aside className="agp-side">
+        <div className="agp-brand">
+          <div className="agp-mark">PS</div>
+          <div className="agp-brand-txt">
+            <b>{L(T.brand, lang)}</b>
+            <span>{L(T.brandSub, lang)}</span>
+          </div>
+        </div>
+        <div className="agp-navscroll">
+          {NAV.map(grp => (
+            <div key={grp.g.en} className="agp-navgroup">
+              <div className="agp-grouplabel">{L(grp.g, lang)}</div>
+              {grp.items.map(it => (
+                <button key={it.id} className={"agp-nav" + (!agentId && view === it.id ? " on" : "")} onClick={() => go(it.id)}>
+                  <span className="ico"><it.Ico /></span>
+                  <span className="lbl">{L(it.label, lang)}</span>
+                  {it.badge != null && it.badge !== "" && <span className={"agp-badge" + (it.warn ? " warn" : "")}>{it.badge}</span>}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="agp-side-foot">
+          <div className="agp-livecount">
+            <LiveDot paused={sim.paused} />
+            <span><b style={{ color: "#0A6B52" }}>{sim.counts.active}</b> {L(T.k_active, lang).toLowerCase()} · {sim.queueLen} {L(T.k_queue, lang).toLowerCase()}</span>
+          </div>
+          <div className="agp-lang">
+            <button className={lang === "th" ? "on" : ""} onClick={() => setLang("th")}>ไทย</button>
+            <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
+          </div>
+        </div>
+      </aside>
+
+      <main className="agp-main">
+        {renderView()}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

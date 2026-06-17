@@ -1,0 +1,934 @@
+{
+  "meta": {
+    "processed_at": "2026-06-11T01:58:57.962681+00:00",
+    "source_csv": "test_3listings.csv",
+    "total_listings": 3,
+    "pass": 3,
+    "borderline": 0,
+    "fail": 0,
+    "systemic_issues": [
+      "3/3 listings missing CAM fee — add to all listings"
+    ]
+  },
+  "listings": [
+    {
+      "listing_id": "743934",
+      "url": "https://propertyscout.co.th/en/1-br-condo-noble-ploenchit-near-bts-phloen-chit-743934/",
+      "type": "Condo",
+      "bedrooms": 1,
+      "price_thb_month": 55000,
+      "area_sqm": 61,
+      "floor": 17,
+      "district": "Phloen Chit, Lumphini, Pathum Wan, Bangkok",
+      "developer": "Noble Development",
+      "transit_station": "BTS Phloen Chit",
+      "transit_distance_m": 120,
+      "duplicate_flag": null,
+      "project": {
+        "name": "Noble Ploenchit",
+        "developer": "Noble Development",
+        "year_built": 2017,
+        "total_floors": 51,
+        "total_units": 1444,
+        "tenure": "Freehold",
+        "project_area_sqm": 14769.2,
+        "facilities": [
+          "swimming pool",
+          "fitness",
+          "garden & BBQ",
+          "golf simulator",
+          "coworking space",
+          "shop on premises",
+          "24-hour security",
+          "covered car park",
+          "parking"
+        ]
+      },
+      "comparable_units": [
+        {
+          "size_sqm": 47,
+          "bedrooms": 1,
+          "floor": null,
+          "price_thb_month": 40000,
+          "price_per_sqm": 851
+        },
+        {
+          "size_sqm": 75,
+          "bedrooms": 2,
+          "floor": null,
+          "price_thb_month": 79000,
+          "price_per_sqm": 1053
+        },
+        {
+          "size_sqm": 90,
+          "bedrooms": 2,
+          "floor": null,
+          "price_thb_month": 78000,
+          "price_per_sqm": 867
+        },
+        {
+          "size_sqm": 121,
+          "bedrooms": 2,
+          "floor": null,
+          "price_thb_month": 130000,
+          "price_per_sqm": 1074
+        }
+      ],
+      "market_comparison": {
+        "this_unit_price_per_sqm": 902,
+        "project_avg_price_per_sqm": 950,
+        "value_assessment": "fair",
+        "nearby_projects": [
+          {
+            "project_name": "Q Chidlom-Phetchaburi",
+            "distance_km": 1.0,
+            "unit_type": "2BR 79sqm",
+            "rent_range_thb": "฿45,000–55,000/mo",
+            "price_per_sqm_range": "฿570–700",
+            "vs_this_listing": "cheaper"
+          },
+          {
+            "project_name": "Villa Asoke",
+            "distance_km": 1.8,
+            "unit_type": "1BR 81sqm",
+            "rent_range_thb": "฿45,000/mo",
+            "price_per_sqm_range": "฿555",
+            "vs_this_listing": "cheaper"
+          },
+          {
+            "project_name": "Magnolias Ratchadamri Boulevard",
+            "distance_km": 1.2,
+            "unit_type": "1BR 55-70sqm",
+            "rent_range_thb": "฿55,000–80,000/mo",
+            "price_per_sqm_range": "฿900–1,150",
+            "vs_this_listing": "similar"
+          }
+        ],
+        "market_position_en": "At ฿902/sqm this 61sqm unit sits in the mid-range for prime Phloen Chit and is well-positioned for the building, between the smaller 47sqm unit (฿851/sqm) and larger premium 2BR units (฿1,050+/sqm). The closest same-project size match is the 47sqm 1BR, making this unit fair value for the extra space and 17th-floor position.",
+        "market_position_th": "ราคา 902 บาท/ตร.ม. สำหรับห้อง 61 ตร.ม. อยู่ในระดับกลางของย่านเพลินจิต ถือว่าเหมาะสมเมื่อเทียบกับห้องอื่นในโครงการ และคุ้มค่ากว่าห้อง 2 ห้องนอนที่ราคาสูงกว่า 1,050 บาท/ตร.ม.",
+        "gross_yield_estimate": null
+      },
+      "location_research": {
+        "transit": [
+          {
+            "name": "BTS Phloen Chit",
+            "distance_m": 120,
+            "type": "BTS"
+          },
+          {
+            "name": "ARL Ratchaprarop",
+            "distance_m": 1500,
+            "type": "ARL"
+          },
+          {
+            "name": "BTS Chit Lom",
+            "distance_m": 900,
+            "type": "BTS"
+          }
+        ],
+        "malls": [
+          {
+            "name": "Central Embassy",
+            "distance_km": 0.5
+          },
+          {
+            "name": "Central Chidlom",
+            "distance_km": 0.8
+          },
+          {
+            "name": "Gaysorn Village",
+            "distance_km": 0.7
+          },
+          {
+            "name": "Siam Paragon",
+            "distance_km": 2.0
+          }
+        ],
+        "markets": [
+          {
+            "name": "Pratunam Market",
+            "distance_km": 1.5,
+            "type": "fresh"
+          },
+          {
+            "name": "Or Tor Kor Market",
+            "distance_km": 6.0,
+            "type": "fresh"
+          }
+        ],
+        "hospitals": [
+          {
+            "name": "Bumrungrad International Hospital",
+            "distance_km": 2.0,
+            "type": "international"
+          },
+          {
+            "name": "Bangkok Hospital",
+            "distance_km": 3.0,
+            "type": "private"
+          }
+        ],
+        "airports": [
+          {
+            "name": "Suvarnabhumi International",
+            "distance_km": 30,
+            "travel_time_min": 45,
+            "note": "via ARL from Phaya Thai / motorway"
+          },
+          {
+            "name": "Don Mueang International",
+            "distance_km": 25,
+            "travel_time_min": 50,
+            "note": "via expressway"
+          }
+        ],
+        "expressways": [
+          {
+            "name": "Si Rat (Chalerm Maha Nakhon) Expressway",
+            "distance_km": 2.0
+          }
+        ],
+        "schools": [
+          {
+            "name": "First Steps International Pre-School",
+            "distance_km": 1.5,
+            "type": "international"
+          }
+        ],
+        "parks_beaches": [
+          {
+            "name": "Lumpini Park",
+            "distance_m": 1500
+          }
+        ],
+        "neighborhood_character": "Phloen Chit is Bangkok's prime embassy and luxury retail district, home to executives, diplomats and affluent expats. It offers seamless BTS access, top-tier malls within walking distance, and a polished, central CBD lifestyle."
+      },
+      "bilingual": {
+        "en": {
+          "title_suggested": "61sqm 1BR Noble Ploenchit, 120m to BTS Phloen Chit",
+          "headline": "Modern 1BR just 120m from BTS Phloen Chit in Bangkok's prime CBD",
+          "description": "This modern 61sqm one-bedroom sits on the 17th floor of Noble Ploenchit, just 120m from BTS Phloen Chit in the heart of Bangkok's embassy district. Central Embassy and Central Chidlom are a 5–10 minute walk, with Bumrungrad International Hospital around 2km away and seamless ARL access to Suvarnabhumi. Completed in 2017 by SET-listed Noble Development, this 51-storey, 1,444-unit freehold project is one of Phloen Chit's landmark addresses. Residents enjoy a swimming pool, fitness centre, golf simulator, coworking space, garden & BBQ area and 24-hour security. Ideal for professionals and expats wanting a fully furnished, walk-to-BTS base in prime central Bangkok.",
+          "location_narrative": "Set 120m from BTS Phloen Chit, the condo connects to Siam, Asok and the entire BTS network within minutes. Central Embassy (500m), Gaysorn (700m) and Central Chidlom (800m) cover luxury shopping and dining, while Bumrungrad International Hospital is ~2km and Lumpini Park ~1.5km away.",
+          "investment_notes": "Noble Ploenchit is a freehold project eligible for foreign quota, developed by SET-listed Noble Development. Comparable 1BR units in the building rent from ฿40,000 (47sqm) upward, giving this 61sqm unit a competitive position for long-term expat tenancy in a high-demand CBD location.",
+          "meta_description": "61sqm 1BR at Noble Ploenchit, 120m to BTS Phloen Chit. Fully furnished, 17th floor, pool, gym & coworking. ฿55,000/mo in Bangkok's prime CBD.",
+          "seo_primary_keyword": "Noble Ploenchit condo for rent",
+          "seo_secondary_keywords": [
+            "1 bedroom condo Phloen Chit",
+            "condo near BTS Phloen Chit",
+            "Noble Ploenchit 1BR rent"
+          ],
+          "faqs": [
+            {
+              "question": "How far is BTS Phloen Chit from the building?",
+              "answer": "BTS Phloen Chit is just 120m away, roughly a 2-minute walk, with direct access to Siam, Asok and the wider BTS network."
+            },
+            {
+              "question": "Can foreigners rent or buy in Noble Ploenchit?",
+              "answer": "Yes. The project is freehold with foreign-quota units available, making it popular with international tenants and buyers."
+            },
+            {
+              "question": "What facilities does Noble Ploenchit offer?",
+              "answer": "Facilities include a swimming pool, fitness centre, golf simulator, coworking space, garden & BBQ area, covered parking and 24-hour security."
+            },
+            {
+              "question": "Which malls and hospitals are nearby?",
+              "answer": "Central Embassy is about 500m away and Central Chidlom around 800m, while Bumrungrad International Hospital is approximately 2km from the condo."
+            }
+          ]
+        },
+        "th": {
+          "title_suggested": "เช่า 1 นอน 61 ตร.ม. Noble Ploenchit ติด BTS เพลินจิต",
+          "headline": "คอนโด 1 นอน ห่าง BTS เพลินจิต เพียง 120 เมตร ใจกลางเมือง",
+          "description": "ห้อง 1 ห้องนอน 61 ตร.ม. ชั้น 17 โครงการ Noble Ploenchit ห่างจาก BTS เพลินจิตเพียง 120 เมตร ใจกลางย่านสถานทูตและช้อปปิ้งระดับบนของกรุงเทพฯ เดินถึง Central Embassy และ Central Chidlom ได้ในไม่กี่นาที ใกล้โรงพยาบาลบำรุงราษฎร์ประมาณ 2 กม. โครงการสร้างเสร็จปี 2017 โดย Noble Development สูง 51 ชั้น 1,444 ยูนิต กรรมสิทธิ์แบบฟรีโฮลด์ พร้อมสระว่ายน้ำ ฟิตเนส กอล์ฟซิมูเลเตอร์ พื้นที่ทำงานร่วม สวนและบาร์บีคิว และรักษาความปลอดภัย 24 ชม. เหมาะสำหรับคนทำงานและชาวต่างชาติที่ต้องการห้องเฟอร์ครบติด BTS",
+          "location_narrative": "ห่าง BTS เพลินจิตเพียง 120 เมตร เชื่อมต่อสยาม อโศก และเครือข่าย BTS ทั้งหมดได้ในไม่กี่นาที ใกล้ Central Embassy 500 เมตร Central Chidlom 800 เมตร โรงพยาบาลบำรุงราษฎร์ประมาณ 2 กม. และสวนลุมพินีประมาณ 1.5 กม.",
+          "investment_notes": "Noble Ploenchit เป็นโครงการฟรีโฮลด์ มีโควตาต่างชาติ พัฒนาโดย Noble Development ที่จดทะเบียนในตลาดหลักทรัพย์ ห้อง 1 นอนในตึกเริ่มเช่าจาก 40,000 บาท ทำให้ห้องนี้คุ้มค่าและเช่าง่ายในทำเล CBD ที่มีดีมานด์สูง",
+          "meta_description": "เช่าคอนโด 1 นอน 61 ตร.ม. Noble Ploenchit ติด BTS เพลินจิต 120 ม. เฟอร์ครบ ชั้น 17 สระ ฟิตเนส 55,000 บาท/เดือน",
+          "seo_primary_keyword": "เช่าคอนโด Noble Ploenchit",
+          "seo_secondary_keywords": [
+            "คอนโด 1 ห้องนอน เพลินจิต",
+            "คอนโดติด BTS เพลินจิต",
+            "เช่าคอนโดเพลินจิต"
+          ],
+          "faqs": [
+            {
+              "question": "BTS เพลินจิต อยู่ห่างจากตึกแค่ไหน?",
+              "answer": "BTS เพลินจิตอยู่ห่างเพียง 120 เมตร เดินประมาณ 2 นาที เชื่อมต่อสยาม อโศก และทุกสายของ BTS ได้สะดวก"
+            },
+            {
+              "question": "ชาวต่างชาติเช่าหรือซื้อ Noble Ploenchit ได้ไหม?",
+              "answer": "ได้ โครงการเป็นฟรีโฮลด์และมีโควตาต่างชาติ เป็นที่นิยมในกลุ่มผู้เช่าและผู้ซื้อต่างชาติ"
+            },
+            {
+              "question": "ค่าส่วนกลางและค่าน้ำค่าไฟเท่าไหร่?",
+              "answer": "ประกาศนี้ยังไม่ได้ระบุค่าส่วนกลาง ค่าน้ำและค่าไฟ แนะนำให้สอบถามกับเจ้าหน้าที่ก่อนเซ็นสัญญา"
+            },
+            {
+              "question": "โครงการมีสิ่งอำนวยความสะดวกอะไรบ้าง?",
+              "answer": "มีสระว่ายน้ำ ฟิตเนส กอล์ฟซิมูเลเตอร์ พื้นที่ทำงานร่วม สวนและบาร์บีคิว ที่จอดรถในร่ม และรักษาความปลอดภัย 24 ชม."
+            }
+          ]
+        }
+      },
+      "missing_fields": [
+        "cam_fee",
+        "electricity_price",
+        "water_price",
+        "property_ownership",
+        "view"
+      ],
+      "issues": {
+        "en": [
+          "CAM fee, electricity and water prices not listed",
+          "View direction not specified for a 17th-floor unit",
+          "Property ownership field shows N/A despite project being freehold"
+        ],
+        "th": [
+          "ไม่ระบุค่าส่วนกลาง ค่าไฟ และค่าน้ำ",
+          "ไม่ระบุทิศ/วิวสำหรับห้องชั้น 17",
+          "ช่องกรรมสิทธิ์แสดง N/A แม้โครงการเป็นฟรีโฮลด์"
+        ]
+      },
+      "priority_actions": {
+        "en": [
+          "Add CAM fee and utility rates to improve completeness",
+          "Specify the view from the 17th floor (city/park) as a USP",
+          "Confirm furniture inventory and pet policy details in description"
+        ],
+        "th": [
+          "เพิ่มค่าส่วนกลางและอัตราค่าน้ำค่าไฟเพื่อความครบถ้วน",
+          "ระบุวิวจากชั้น 17 (วิวเมือง/สวน) เป็นจุดขาย",
+          "ยืนยันรายการเฟอร์นิเจอร์และนโยบายสัตว์เลี้ยงในรายละเอียด"
+        ]
+      },
+      "scores": {
+        "completeness": 75,
+        "accuracy": 92,
+        "appeal": 88,
+        "total": 84,
+        "grade": "B+",
+        "result": "PASS"
+      },
+      "schema_markup": {
+        "@context": "https://schema.org",
+        "@type": "Apartment",
+        "name": "Noble Ploenchit",
+        "address": {
+          "streetAddress": "Phloen Chit, Lumphini, Pathum Wan",
+          "addressLocality": "Bangkok",
+          "addressCountry": "TH"
+        },
+        "numberOfRooms": 1,
+        "floorSize": {
+          "value": 61,
+          "unitCode": "MTK"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": 55000,
+          "priceCurrency": "THB"
+        }
+      }
+    },
+    {
+      "listing_id": "2103541",
+      "url": "https://propertyscout.co.th/en/1-br-condo-grand-florida-beachfront-pattaya-close-pattaya-2103541/",
+      "type": "Condo",
+      "bedrooms": 1,
+      "price_thb_month": 17100,
+      "area_sqm": 36.48,
+      "floor": 1,
+      "district": "Na Chom Thian, Sattahip, Chon Buri",
+      "developer": "Blue Sky Asset Plus Co., Ltd.",
+      "transit_station": null,
+      "transit_distance_m": null,
+      "duplicate_flag": "Possible near-duplicate of listing at ฿17,000/mo (36sqm, ฿3,900,000 sale) and ฿23,000/mo (36.22sqm, ฿4,700,000) in same project — verify these are distinct units",
+      "project": {
+        "name": "Grand Florida Beachfront Pattaya",
+        "developer": "Blue Sky Asset Plus Co., Ltd.",
+        "year_built": 2020,
+        "total_floors": 8,
+        "total_units": 1082,
+        "tenure": "Freehold",
+        "project_area_sqm": 27200,
+        "facilities": [
+          "swimming pool",
+          "gym",
+          "sauna",
+          "steam room",
+          "covered car park",
+          "security cameras",
+          "garden",
+          "communal spa",
+          "coworking space",
+          "communal reception",
+          "elevator"
+        ]
+      },
+      "comparable_units": [
+        {
+          "size_sqm": 36.22,
+          "bedrooms": 1,
+          "floor": null,
+          "price_thb_month": 23000,
+          "price_per_sqm": 635
+        },
+        {
+          "size_sqm": 36,
+          "bedrooms": 1,
+          "floor": null,
+          "price_thb_month": 17000,
+          "price_per_sqm": 472
+        },
+        {
+          "size_sqm": 75,
+          "bedrooms": 2,
+          "floor": null,
+          "price_thb_month": 38000,
+          "price_per_sqm": 507
+        },
+        {
+          "size_sqm": 75,
+          "bedrooms": 2,
+          "floor": null,
+          "price_thb_month": 40000,
+          "price_per_sqm": 533
+        },
+        {
+          "size_sqm": 102,
+          "bedrooms": 3,
+          "floor": null,
+          "price_thb_month": 50000,
+          "price_per_sqm": 490
+        }
+      ],
+      "market_comparison": {
+        "this_unit_price_per_sqm": 469,
+        "project_avg_price_per_sqm": 525,
+        "value_assessment": "value",
+        "nearby_projects": [
+          {
+            "project_name": "The Riviera Jomtien",
+            "distance_km": 6,
+            "unit_type": "1BR 32-35sqm",
+            "rent_range_thb": "฿15,000–20,000/mo",
+            "price_per_sqm_range": "฿450–570",
+            "vs_this_listing": "similar"
+          },
+          {
+            "project_name": "The Feelture Pattaya",
+            "distance_km": 5,
+            "unit_type": "1BR 39-42sqm",
+            "rent_range_thb": "฿15,000/mo",
+            "price_per_sqm_range": "฿357–385",
+            "vs_this_listing": "cheaper"
+          },
+          {
+            "project_name": "Venetian Signature Condo Resort",
+            "distance_km": 4,
+            "unit_type": "2BR 57sqm",
+            "rent_range_thb": "฿15,900/mo",
+            "price_per_sqm_range": "฿279",
+            "vs_this_listing": "cheaper"
+          }
+        ],
+        "market_position_en": "At ฿469/sqm this 1BR sits at the lower end of pricing within Grand Florida (project avg ~฿525/sqm), making it strong value — nearly identical to the ฿17,000/mo 36sqm unit but well below the ฿23,000/mo 36.22sqm comparable. The premium over inland Jomtien condos reflects the beachfront resort setting and full facilities.",
+        "market_position_th": "ราคา ฿469/ตร.ม. ถือว่าคุ้มค่าเมื่อเทียบกับค่าเฉลี่ยโครงการ (~฿525/ตร.ม.) และใกล้เคียงกับยูนิตขนาด 36 ตร.ม. ที่ ฿17,000/เดือน แต่ถูกกว่ายูนิต 36.22 ตร.ม. ที่ ฿23,000/เดือนมาก เหมาะกับผู้ที่ต้องการคอนโดติดทะเลในราคาเข้าถึงได้",
+        "gross_yield_estimate": "5.2% — based on comparable sale price ฿3,900,000 and ฿17,100/mo rent"
+      },
+      "location_research": {
+        "transit": [],
+        "malls": [
+          {
+            "name": "Tesco Lotus Jomtien",
+            "distance_km": 7
+          },
+          {
+            "name": "Terminal 21 Pattaya",
+            "distance_km": 12
+          },
+          {
+            "name": "Central Festival Pattaya Beach",
+            "distance_km": 13
+          }
+        ],
+        "markets": [
+          {
+            "name": "Thepprasit Night Market",
+            "distance_km": 8,
+            "type": "night"
+          },
+          {
+            "name": "Bang Saray fishing village market",
+            "distance_km": 6,
+            "type": "fresh"
+          }
+        ],
+        "hospitals": [
+          {
+            "name": "Bangkok Hospital Pattaya",
+            "distance_km": 11,
+            "type": "private"
+          },
+          {
+            "name": "Pattaya International Hospital",
+            "distance_km": 12,
+            "type": "private"
+          }
+        ],
+        "airports": [
+          {
+            "name": "U-Tapao International Airport",
+            "distance_km": 28,
+            "travel_time_min": 30,
+            "note": "via Sukhumvit Rd / motorway"
+          },
+          {
+            "name": "Suvarnabhumi Airport",
+            "distance_km": 155,
+            "travel_time_min": 110,
+            "note": "via Bangkok-Pattaya motorway"
+          }
+        ],
+        "expressways": [
+          {
+            "name": "Bangkok–Chonburi–Pattaya Motorway (Highway 7)",
+            "distance_km": 10
+          }
+        ],
+        "schools": [
+          {
+            "name": "Rugby School Thailand",
+            "distance_km": 15,
+            "type": "international"
+          },
+          {
+            "name": "Regents International School Pattaya",
+            "distance_km": 18,
+            "type": "international"
+          }
+        ],
+        "parks_beaches": [
+          {
+            "name": "Na Jomtien Beach",
+            "distance_m": 300
+          },
+          {
+            "name": "Jomtien Beach",
+            "distance_m": 4000
+          }
+        ],
+        "neighborhood_character": "Na Chom Thian (Na Jomtien) is a quieter, lower-rise beachfront stretch south of central Pattaya, favored by European and Scandinavian long-stay residents and retirees seeking privacy. The area is growing with upscale beachfront developments while keeping a relaxed seaside pace away from Pattaya's nightlife."
+      },
+      "bilingual": {
+        "en": {
+          "title_suggested": "36sqm 1BR Beachfront Condo, Na Jomtien — ฿17,100/mo",
+          "headline": "Beachfront 1BR just 300m from Na Jomtien Beach with resort-style pool & gym",
+          "description": "This fully furnished 1-bedroom condo at Grand Florida Beachfront Pattaya offers beachfront resort living just ~300m from Na Jomtien Beach at an accessible ฿17,100/month. Located in tranquil Na Chom Thian, it sits ~28km from U-Tapao Airport (~30min) and ~11km from Bangkok Hospital Pattaya, with Tesco Lotus Jomtien around 7km away. Completed in 2020 by Blue Sky Asset Plus, the freehold project spreads 1,082 units across 8 low-rise towers on a 27,200sqm beachfront plot. Residents enjoy a swimming pool, gym, sauna, steam room, communal spa, coworking space and covered parking. Ideal for retirees, long-stay expats, or investors seeking a beachfront holiday rental away from Pattaya's busier strip.",
+          "location_narrative": "Set in Na Chom Thian about 300m from Na Jomtien Beach, the property is roughly 12km from central Pattaya and Terminal 21. U-Tapao International Airport is around 28km (~30min) and Bangkok is reachable in about 1h50min via the Pattaya motorway. Bangkok Hospital Pattaya lies ~11km north along Sukhumvit Road.",
+          "investment_notes": "Freehold project with foreign-quota units available to overseas buyers. With a comparable sale price near ฿3.9M this unit implies a ~5.2% gross yield, and the beachfront resort facilities support strong short-term holiday rental demand among European long-stayers.",
+          "meta_description": "Fully furnished 1BR beachfront condo at Grand Florida Pattaya, ~300m to Na Jomtien Beach. ฿17,100/mo, pool, gym, sauna. Freehold, foreign quota.",
+          "seo_primary_keyword": "beachfront condo for rent Na Jomtien Pattaya",
+          "seo_secondary_keywords": [
+            "Grand Florida Beachfront Pattaya rent",
+            "1 bedroom condo Na Chom Thian",
+            "Pattaya beachfront condo Airbnb"
+          ],
+          "faqs": [
+            {
+              "question": "How far is the beach from this condo?",
+              "answer": "Grand Florida Beachfront Pattaya is a beachfront project located approximately 300m from Na Jomtien Beach, with Jomtien Beach about 4km north."
+            },
+            {
+              "question": "How far is U-Tapao Airport and Pattaya city center?",
+              "answer": "U-Tapao International Airport is around 28km (~30min drive), while central Pattaya and Terminal 21 are about 12km away."
+            },
+            {
+              "question": "Can foreigners buy or rent in this project?",
+              "answer": "Yes — Grand Florida is a freehold development with foreign-quota units, so foreigners can both rent and buy here subject to availability."
+            },
+            {
+              "question": "Is this unit suitable for short-term or Airbnb rental?",
+              "answer": "The beachfront location and resort facilities make it attractive for holiday rentals, though owners should confirm the building's specific short-term rental policy."
+            }
+          ]
+        },
+        "th": {
+          "title_suggested": "คอนโดติดทะเล 1 นอน 36 ตร.ม. นาจอมเทียน ฿17,100/เดือน",
+          "headline": "คอนโดติดหาดนาจอมเทียน ห่างทะเลเพียง 300 เมตร พร้อมสระว่ายน้ำและฟิตเนส",
+          "description": "คอนโด 1 ห้องนอนตกแต่งครบที่ Grand Florida Beachfront Pattaya ให้เช่าในราคาเข้าถึงได้เพียง ฿17,100/เดือน ห่างจากหาดนาจอมเทียนประมาณ 300 เมตร ตั้งอยู่ในย่านนาจอมเทียนที่เงียบสงบ ห่างสนามบินอู่ตะเภาราว 28 กม. (~30 นาที) และโรงพยาบาลกรุงเทพพัทยาราว 11 กม. โครงการสร้างเสร็จปี 2020 โดย Blue Sky Asset Plus เป็นฟรีโฮลด์ 1,082 ยูนิต บนพื้นที่ติดทะเล 27,200 ตร.ม. พร้อมสระว่ายน้ำ ฟิตเนส ซาวน่า ห้องอบไอน้ำ สปา และที่จอดรถมีหลังคา เหมาะสำหรับผู้พักผ่อนระยะยาว ชาวต่างชาติ หรือนักลงทุนที่มองหาคอนโดติดทะเลปล่อยเช่า",
+          "location_narrative": "ตั้งอยู่ในนาจอมเทียน ห่างหาดนาจอมเทียนประมาณ 300 เมตร และห่างใจกลางพัทยากับ Terminal 21 ราว 12 กม. สนามบินอู่ตะเภาอยู่ห่างประมาณ 28 กม. (~30 นาที) เดินทางถึงกรุงเทพได้ในราว 1 ชม. 50 นาทีผ่านมอเตอร์เวย์ โรงพยาบาลกรุงเทพพัทยาอยู่ห่างไปทางเหนือราว 11 กม.",
+          "investment_notes": "โครงการฟรีโฮลด์ มีโควต้าต่างชาติให้ซื้อได้ ราคาขายเทียบเคียงประมาณ 3.9 ล้านบาท ให้ผลตอบแทนค่าเช่าราว 5.2% ต่อปี ทำเลติดทะเลพร้อมสิ่งอำนวยความสะดวกครบเหมาะกับการปล่อยเช่าระยะสั้นกับนักท่องเที่ยวต่างชาติ",
+          "meta_description": "คอนโดติดทะเล 1 นอน 36 ตร.ม. Grand Florida พัทยา ห่างหาดนาจอมเทียน 300 ม. ฿17,100/เดือน สระว่ายน้ำ ฟิตเนส ฟรีโฮลด์ โควต้าต่างชาติ",
+          "seo_primary_keyword": "คอนโดติดทะเลให้เช่า นาจอมเทียน พัทยา",
+          "seo_secondary_keywords": [
+            "Grand Florida Beachfront พัทยา เช่า",
+            "คอนโด 1 ห้องนอน นาจอมเทียน",
+            "คอนโดติดทะเลพัทยา ปล่อยเช่า"
+          ],
+          "faqs": [
+            {
+              "question": "คอนโดนี้ห่างจากทะเลแค่ไหน?",
+              "answer": "Grand Florida Beachfront Pattaya เป็นโครงการติดทะเล ห่างจากหาดนาจอมเทียนประมาณ 300 เมตร และห่างหาดจอมเทียนราว 4 กม."
+            },
+            {
+              "question": "ห่างจากสนามบินอู่ตะเภาและตัวเมืองพัทยาเท่าไหร่?",
+              "answer": "ห่างสนามบินอู่ตะเภาราว 28 กม. (~30 นาที) และห่างใจกลางพัทยากับ Terminal 21 ประมาณ 12 กม."
+            },
+            {
+              "question": "ชาวต่างชาติเช่าหรือซื้อได้ไหม?",
+              "answer": "ได้ โครงการเป็นฟรีโฮลด์และมีโควต้าต่างชาติ ชาวต่างชาติจึงสามารถเช่าและซื้อได้ตามจำนวนที่ยังว่าง"
+            },
+            {
+              "question": "ห้องนี้เหมาะกับการปล่อยเช่าระยะสั้นหรือไม่?",
+              "answer": "ทำเลติดทะเลและสิ่งอำนวยความสะดวกแบบรีสอร์ทเหมาะกับการปล่อยเช่าวันหยุด แต่ควรตรวจสอบนโยบายการเช่าระยะสั้นของอาคารก่อน"
+            }
+          ]
+        }
+      },
+      "missing_fields": [
+        "cam_fee",
+        "electricity_price",
+        "water_price",
+        "property_ownership_status"
+      ],
+      "issues": {
+        "en": [
+          "CAM fees, electricity and water prices not listed — important for tenant budgeting",
+          "Unit is on 1st floor with garden view (not sea view), which limits the beachfront premium despite the project location",
+          "Possible duplicate/overlap with very similar 36sqm units at ฿17,000 and ฿23,000/mo — verify distinct inventory"
+        ],
+        "th": [
+          "ไม่ระบุค่าส่วนกลาง ค่าไฟ และค่าน้ำ ซึ่งสำคัญต่อการคำนวณงบของผู้เช่า",
+          "ยูนิตอยู่ชั้น 1 วิวสวน (ไม่ใช่วิวทะเล) ทำให้มูลค่าติดทะเลลดลงแม้โครงการจะติดหาด",
+          "อาจซ้ำกับยูนิต 36 ตร.ม. ที่ ฿17,000 และ ฿23,000/เดือน ควรตรวจสอบว่าเป็นคนละห้อง"
+        ]
+      },
+      "priority_actions": {
+        "en": [
+          "Add CAM fee, electricity and water rates to complete the listing",
+          "Clarify view (garden vs partial sea) and floor positioning in the headline to set expectations",
+          "Add sale price (~฿3.9M comparable) to enable yield-based investor marketing"
+        ],
+        "th": [
+          "เพิ่มค่าส่วนกลาง ค่าไฟ และค่าน้ำ เพื่อให้ข้อมูลครบถ้วน",
+          "ระบุวิว (สวน/ทะเลบางส่วน) และตำแหน่งชั้นในพาดหัวเพื่อให้ตรงความคาดหวัง",
+          "เพิ่มราคาขาย (เทียบเคียง ~3.9 ล้านบาท) เพื่อทำการตลาดเชิงผลตอบแทนสำหรับนักลงทุน"
+        ]
+      },
+      "scores": {
+        "completeness": 78,
+        "accuracy": 88,
+        "appeal": 84,
+        "total": 83,
+        "grade": "B+",
+        "result": "PASS"
+      },
+      "schema_markup": {
+        "@context": "https://schema.org",
+        "@type": "Apartment",
+        "name": "Grand Florida Beachfront Pattaya",
+        "address": {
+          "streetAddress": "Na Chom Thian, Sattahip",
+          "addressLocality": "Pattaya, Chon Buri",
+          "addressCountry": "TH"
+        },
+        "numberOfRooms": 1,
+        "floorSize": {
+          "value": 36.48,
+          "unitCode": "MTK"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": 17100,
+          "priceCurrency": "THB"
+        }
+      }
+    },
+    {
+      "listing_id": "2151655",
+      "url": "https://propertyscout.co.th/en/4-br-condo-dusit-condominium-close-the-venezia-2151655/",
+      "type": "Condo",
+      "bedrooms": 4,
+      "price_thb_month": 170000,
+      "area_sqm": 317,
+      "floor": 7,
+      "district": "Cha-Am, Phetchaburi",
+      "developer": null,
+      "transit_station": null,
+      "transit_distance_m": null,
+      "duplicate_flag": null,
+      "project": {
+        "name": "Dusit Condominium",
+        "developer": null,
+        "year_built": 2010,
+        "total_floors": 11,
+        "total_units": 300,
+        "tenure": "Freehold",
+        "project_area_sqm": null,
+        "facilities": [
+          "swimming pool",
+          "gym",
+          "tennis court",
+          "running track",
+          "garden",
+          "kids play area",
+          "security cameras",
+          "24-hour security",
+          "open car park",
+          "covered car park"
+        ]
+      },
+      "comparable_units": [
+        {
+          "size_sqm": 80,
+          "bedrooms": 1,
+          "floor": null,
+          "price_thb_month": 25000,
+          "price_per_sqm": 313
+        }
+      ],
+      "market_comparison": {
+        "this_unit_price_per_sqm": 536,
+        "project_avg_price_per_sqm": 425,
+        "value_assessment": "premium",
+        "nearby_projects": [
+          {
+            "project_name": "Boat House Hua Hin",
+            "distance_km": 5,
+            "unit_type": "5BR 500sqm condo",
+            "rent_range_thb": "฿180,000/mo",
+            "price_per_sqm_range": "฿360",
+            "vs_this_listing": "cheaper"
+          },
+          {
+            "project_name": "Detached house near The Venezia",
+            "distance_km": 1,
+            "unit_type": "4BR 382sqm house",
+            "rent_range_thb": "฿150,000/mo",
+            "price_per_sqm_range": "฿393",
+            "vs_this_listing": "cheaper"
+          },
+          {
+            "project_name": "Villa near The Venezia",
+            "distance_km": 1,
+            "unit_type": "3BR 700sqm villa",
+            "rent_range_thb": "฿160,000/mo",
+            "price_per_sqm_range": "฿229",
+            "vs_this_listing": "cheaper"
+          }
+        ],
+        "market_position_en": "At ฿536/sqm this large 4BR sea-view unit sits at the top end of the Cha-Am rental market and is priced higher per-sqm than the 1BR unit in the same building (฿313/sqm), reflecting its premium top-area position and sea views. Compared with similar ฿150,000–180,000/mo houses and villas nearby, it offers full condo facilities and beach proximity but less private land.",
+        "market_position_th": "ที่ราคา ฿536/ตร.ม. ห้อง 4 ห้องนอนวิวทะเลขนาดใหญ่นี้อยู่ระดับบนของตลาดเช่าชะอำ และราคาต่อตารางเมตรสูงกว่าห้อง 1 ห้องนอนในตึกเดียวกัน (฿313/ตร.ม.) สะท้อนความพรีเมียมและวิวทะเล เมื่อเทียบกับบ้านและวิลล่าใกล้เคียงราคา ฿150,000–180,000/เดือน ห้องนี้มีสิ่งอำนวยความสะดวกครบและใกล้ชายหาดมากกว่า",
+        "gross_yield_estimate": null
+      },
+      "location_research": {
+        "transit": [
+          {
+            "name": "No rail transit — car/taxi access via Phetkasem Road (Highway 4)",
+            "distance_m": 500,
+            "type": "bus"
+          }
+        ],
+        "malls": [
+          {
+            "name": "Market Village Hua Hin",
+            "distance_km": 18
+          },
+          {
+            "name": "Bluport Hua Hin Resort Mall",
+            "distance_km": 20
+          }
+        ],
+        "markets": [
+          {
+            "name": "Cha-Am Beach street market",
+            "distance_km": 2,
+            "type": "night"
+          },
+          {
+            "name": "Hua Hin Night Market",
+            "distance_km": 22,
+            "type": "night"
+          }
+        ],
+        "hospitals": [
+          {
+            "name": "Cha-Am Hospital (government)",
+            "distance_km": 5,
+            "type": "government"
+          },
+          {
+            "name": "Bangkok Hospital Hua Hin",
+            "distance_km": 22,
+            "type": "private"
+          }
+        ],
+        "airports": [
+          {
+            "name": "Hua Hin Airport",
+            "distance_km": 25,
+            "travel_time_min": 30,
+            "note": "via Phetkasem Road"
+          },
+          {
+            "name": "Bangkok Don Mueang (DMK)",
+            "distance_km": 206,
+            "travel_time_min": 150,
+            "note": "approx 2.5hr drive via Highway 4 / Rama II"
+          }
+        ],
+        "expressways": [
+          {
+            "name": "Phetkasem Road (Highway 4)",
+            "distance_km": 1
+          }
+        ],
+        "schools": [
+          {
+            "name": "Hua Hin International School",
+            "distance_km": 24,
+            "type": "international"
+          }
+        ],
+        "parks_beaches": [
+          {
+            "name": "Cha-Am Beach",
+            "distance_m": 800
+          }
+        ],
+        "neighborhood_character": "Cha-Am is a budget-friendly, laid-back beach town popular with Thai families and Bangkok weekenders, quieter and more affordable than neighboring Hua Hin. The area around The Venezia offers a relaxed seaside lifestyle with beachfront restaurants, local markets, and easy weekend access from Bangkok."
+      },
+      "bilingual": {
+        "en": {
+          "title_suggested": "317sqm 4BR Sea-View Condo near Cha-Am Beach",
+          "headline": "Expansive 317sqm sea-view 4BR just 800m from Cha-Am Beach",
+          "description": "This rare 317sqm, 4-bedroom sea-view condo offers some of the largest living space available in Cha-Am, ideal for big families or long-stay groups. Located in the popular Cha-Am district, the unit sits roughly 800m from Cha-Am Beach with quick access to Phetkasem Road (Highway 4) for the ~2.5hr drive to Bangkok, while Hua Hin's Market Village and Bluport malls are about 18-20km south. Completed in 2010, Dusit Condominium is a freehold project of 300 units across 11 floors with full resort facilities. Residents enjoy a swimming pool, gym, tennis court, running track, landscaped gardens, a kids' play area, and 24-hour security with covered parking. Fully furnished and on the 7th floor with sea views, it suits families and retirees seeking a spacious beachside weekend retreat.",
+          "location_narrative": "Set in Cha-Am near The Venezia, the property is about 800m from Cha-Am Beach and 1km from Phetkasem Road (Highway 4). Hua Hin town with Market Village and Bluport malls is roughly 18-20km away, while Bangkok is a ~2.5hr drive. The nearest private hospital, Bangkok Hospital Hua Hin, is about 22km south.",
+          "investment_notes": "Dusit Condominium is a freehold project, making units eligible for foreign quota ownership. The large 317sqm sea-view format is uncommon in Cha-Am and suits long-term family rentals; smaller 1BR units in the same building lease from around ฿25,000/month.",
+          "meta_description": "Spacious 317sqm 4BR sea-view condo for rent at Dusit Condominium, Cha-Am — ฿170,000/mo, fully furnished, 800m from beach, pool, gym & tennis.",
+          "seo_primary_keyword": "Cha-Am sea view condo for rent",
+          "seo_secondary_keywords": [
+            "Dusit Condominium Cha-Am",
+            "4 bedroom condo Cha-Am",
+            "beachside condo Hua Hin Cha-Am rental"
+          ],
+          "faqs": [
+            {
+              "question": "How far is Cha-Am Beach from the property?",
+              "answer": "Cha-Am Beach is approximately 800m away, around a 10-minute walk from Dusit Condominium."
+            },
+            {
+              "question": "How far is this condo from Bangkok and Hua Hin?",
+              "answer": "Bangkok is roughly a 2.5-hour drive via Highway 4, while central Hua Hin with its malls is about 18-20km south."
+            },
+            {
+              "question": "What facilities does Dusit Condominium offer?",
+              "answer": "The project includes a swimming pool, gym, tennis court, running track, landscaped gardens, a kids' play area, and 24-hour security with covered parking."
+            },
+            {
+              "question": "Can foreigners rent or own units here?",
+              "answer": "Yes. Dusit Condominium is a freehold project, so units can qualify for foreign quota ownership, and foreigners can rent freely."
+            }
+          ]
+        },
+        "th": {
+          "title_suggested": "คอนโด 4 ห้องนอน 317 ตร.ม. วิวทะเล ชะอำ",
+          "headline": "คอนโดวิวทะเล 4 ห้องนอน 317 ตร.ม. ห่างหาดชะอำเพียง 800 เมตร",
+          "description": "คอนโด 4 ห้องนอน วิวทะเล ขนาดใหญ่ถึง 317 ตร.ม. หาได้ยากในชะอำ เหมาะสำหรับครอบครัวใหญ่หรือกลุ่มที่ต้องการพื้นที่กว้างขวาง ตั้งอยู่ในย่านชะอำยอดนิยม ห่างหาดชะอำประมาณ 800 เมตร เดินทางสะดวกผ่านถนนเพชรเกษม (ทางหลวงหมายเลข 4) ใช้เวลาขับรถถึงกรุงเทพฯ ประมาณ 2.5 ชั่วโมง และห่างห้างใหญ่ในหัวหินอย่าง Market Village และ Bluport ราว 18-20 กม. โครงการดุสิต คอนโดมิเนียม สร้างเสร็จปี 2010 เป็นโครงการฟรีโฮลด์ 300 ยูนิต สูง 11 ชั้น พร้อมสิ่งอำนวยความสะดวกครบครัน ทั้งสระว่ายน้ำ ฟิตเนส คอร์ทเทนนิส ลู่วิ่ง สวนสวย สนามเด็กเล่น และรักษาความปลอดภัย 24 ชั่วโมง ห้องชั้น 7 ตกแต่งครบ วิวทะเล เหมาะกับครอบครัวและผู้พักผ่อนที่มองหาบ้านพักตากอากาศริมทะเล",
+          "location_narrative": "ตั้งอยู่ในชะอำใกล้ The Venezia ห่างหาดชะอำประมาณ 800 เมตร และห่างถนนเพชรเกษม (ทางหลวงหมายเลข 4) ประมาณ 1 กม. ตัวเมืองหัวหินพร้อมห้าง Market Village และ Bluport อยู่ห่างราว 18-20 กม. เดินทางจากกรุงเทพฯ ประมาณ 2.5 ชั่วโมง โรงพยาบาลเอกชนที่ใกล้ที่สุดคือโรงพยาบาลกรุงเทพหัวหิน ห่างประมาณ 22 กม.",
+          "investment_notes": "ดุสิต คอนโดมิเนียม เป็นโครงการฟรีโฮลด์ ยูนิตจึงสามารถถือครองในโควต้าต่างชาติได้ ห้องวิวทะเลขนาดใหญ่ 317 ตร.ม. หาได้ยากในชะอำ เหมาะกับการปล่อยเช่าครอบครัวระยะยาว ส่วนห้อง 1 ห้องนอนในตึกเดียวกันเริ่มต้นเช่าประมาณ ฿25,000/เดือน",
+          "meta_description": "คอนโด 4 ห้องนอน วิวทะเล 317 ตร.ม. ที่ดุสิต คอนโดมิเนียม ชะอำ ฿170,000/เดือน ตกแต่งครบ ห่างหาด 800 ม. สระว่ายน้ำ ฟิตเนส คอร์ทเทนนิส",
+          "seo_primary_keyword": "คอนโดวิวทะเลชะอำให้เช่า",
+          "seo_secondary_keywords": [
+            "ดุสิต คอนโดมิเนียม ชะอำ",
+            "คอนโด 4 ห้องนอน ชะอำ",
+            "คอนโดริมทะเลชะอำหัวหิน"
+          ],
+          "faqs": [
+            {
+              "question": "หาดชะอำอยู่ห่างจากคอนโดเท่าไหร่?",
+              "answer": "หาดชะอำอยู่ห่างประมาณ 800 เมตร เดินถึงได้ในราว 10 นาที"
+            },
+            {
+              "question": "เดินทางจากกรุงเทพฯ และหัวหินไกลแค่ไหน?",
+              "answer": "ขับรถจากกรุงเทพฯ ประมาณ 2.5 ชั่วโมงผ่านทางหลวงหมายเลข 4 ส่วนตัวเมืองหัวหินพร้อมห้างอยู่ห่างราว 18-20 กม."
+            },
+            {
+              "question": "โครงการมีสิ่งอำนวยความสะดวกอะไรบ้าง?",
+              "answer": "มีสระว่ายน้ำ ฟิตเนส คอร์ทเทนนิส ลู่วิ่ง สวน สนามเด็กเล่น และรักษาความปลอดภัย 24 ชั่วโมง พร้อมที่จอดรถมีหลังคา"
+            },
+            {
+              "question": "ชาวต่างชาติเช่าหรือซื้อได้ไหม?",
+              "answer": "ได้ ดุสิต คอนโดมิเนียมเป็นโครงการฟรีโฮลด์ จึงสามารถถือครองในโควต้าต่างชาติได้ และชาวต่างชาติเช่าได้อย่างอิสระ"
+            }
+          ]
+        }
+      },
+      "missing_fields": [
+        "cam_fee",
+        "electricity_price",
+        "water_price",
+        "property_ownership",
+        "developer",
+        "project_area_sqm",
+        "sell_price_per_sqm"
+      ],
+      "issues": {
+        "en": [
+          "No CAM fee, electricity, or water pricing disclosed",
+          "Developer company name not listed",
+          "Pets listed as Not Allowed while a same-building 1BR comp is marked Pet-Friendly — possible inconsistency",
+          "High ฿536/sqm vs same-building 1BR (฿313/sqm) needs justification (floor, sea view, size) in copy"
+        ],
+        "th": [
+          "ไม่ระบุค่าส่วนกลาง ค่าไฟ และค่าน้ำ",
+          "ไม่ระบุชื่อบริษัทผู้พัฒนาโครงการ",
+          "ระบุไม่อนุญาตสัตว์เลี้ยง แต่ห้อง 1 ห้องนอนในตึกเดียวกันระบุ Pet-Friendly อาจไม่สอดคล้องกัน",
+          "ราคา ฿536/ตร.ม. สูงกว่าห้อง 1 ห้องนอนในตึกเดียวกัน (฿313/ตร.ม.) ควรอธิบายเหตุผล (ชั้น วิวทะเล ขนาด)"
+        ]
+      },
+      "priority_actions": {
+        "en": [
+          "Add CAM fee, electricity and water rates",
+          "Confirm and add developer/project owner name",
+          "Clarify pet policy discrepancy between this unit and same-building listings",
+          "Add sea-view and beach-proximity photos to justify the premium price/sqm"
+        ],
+        "th": [
+          "เพิ่มข้อมูลค่าส่วนกลาง ค่าไฟ และค่าน้ำ",
+          "ยืนยันและเพิ่มชื่อผู้พัฒนาโครงการ",
+          "ชี้แจงนโยบายสัตว์เลี้ยงให้สอดคล้องกับห้องอื่นในตึกเดียวกัน",
+          "เพิ่มรูปวิวทะเลและความใกล้ชายหาดเพื่อรองรับราคาต่อตารางเมตรที่สูง"
+        ]
+      },
+      "scores": {
+        "completeness": 70,
+        "accuracy": 84,
+        "appeal": 82,
+        "total": 78,
+        "grade": "B+",
+        "result": "PASS"
+      },
+      "schema_markup": {
+        "@context": "https://schema.org",
+        "@type": "Apartment",
+        "name": "Dusit Condominium",
+        "address": {
+          "streetAddress": "Cha-Am, near The Venezia",
+          "addressLocality": "Cha-Am, Phetchaburi",
+          "addressCountry": "TH"
+        },
+        "numberOfRooms": 4,
+        "floorSize": {
+          "value": 317,
+          "unitCode": "MTK"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": 170000,
+          "priceCurrency": "THB"
+        }
+      }
+    }
+  ]
+}

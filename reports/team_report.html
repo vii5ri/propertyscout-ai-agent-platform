@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PropertyScout — Listing Quality Report</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif; background: #F5F0EA; color: #211E1A; font-size: 14px; line-height: 1.55; }
+  a { color: inherit; }
+  .page { max-width: 1080px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── Header ── */
+  .header { background: #211E1A; color: #EFE9DF; border-radius: 20px; padding: 24px 28px; display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
+  .logo { width: 50px; height: 50px; border-radius: 12px; background: #0E9E78; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; }
+  .header-txt { flex: 1; }
+  .header-txt h1 { font-size: 20px; font-weight: 800; margin-bottom: 3px; }
+  .header-txt p { font-size: 13px; opacity: .65; }
+  .header-right { text-align: right; }
+  .date { font-size: 12px; opacity: .6; font-family: 'IBM Plex Mono', monospace; }
+  .print-btn { margin-top: 10px; display: inline-block; background: #0E9E78; color: #fff; padding: 8px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; font-family: inherit; }
+
+  /* ── Lang toggle ── */
+  .lang-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .lang-btn { border: 1.5px solid #C9BEA8; background: #fff; color: #6B655C; border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .lang-btn.active { background: #211E1A; color: #EFE9DF; border-color: #211E1A; }
+
+  /* ── KPI Row ── */
+  .kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 18px; }
+  .kpi { background: #fff; border-radius: 14px; padding: 16px; text-align: center; border: 1px solid #E3DACB; }
+  .kpi .val { font-size: 30px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; }
+  .kpi .lbl { font-size: 11px; color: #8B8475; margin-top: 4px; }
+  .kpi.green .val { color: #0E9E78; }
+  .kpi.yellow .val { color: #C99528; }
+  .kpi.red .val { color: #D45B3C; }
+
+  /* ── Systemic banner ── */
+  .banner { background: #FBE8E2; border-left: 4px solid #D45B3C; border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; }
+  .banner h3 { font-size: 13px; font-weight: 700; color: #D45B3C; margin-bottom: 6px; }
+  .banner ul { padding-left: 18px; color: #6B655C; font-size: 13px; line-height: 1.8; }
+
+  /* ── Summary table ── */
+  .section-title { font-size: 17px; font-weight: 800; margin: 0 0 14px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #E3DACB; font-size: 13px; }
+  thead th { background: #211E1A; color: #EFE9DF; font-size: 11px; font-weight: 700; text-align: left; padding: 10px 12px; text-transform: uppercase; letter-spacing: .06em; }
+  tbody tr:nth-child(even) { background: #FAF7F3; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #EDE8E0; vertical-align: middle; }
+  .grade-cell { font-weight: 800; font-family: 'IBM Plex Mono', monospace; }
+  .result-pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 11.5px; font-weight: 700; }
+  .result-pill.pass { background: #DCFAEF; color: #0A6B52; }
+  .result-pill.borderline { background: #FFF4D5; color: #A07A10; }
+  .result-pill.fail { background: #FBE8E2; color: #D45B3C; }
+  .url-link { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #4B6BAE; word-break: break-all; text-decoration: none; }
+  .url-link:hover { text-decoration: underline; }
+
+  /* ── Listing cards ── */
+  .listing-section { margin-bottom: 44px; background: #fff; border-radius: 20px; border: 1px solid #E3DACB; overflow: hidden; page-break-inside: avoid; }
+  .listing-head { background: #211E1A; color: #EFE9DF; padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px; }
+  .listing-grade-box { width: 58px; height: 58px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,.1); flex: 0 0 auto; }
+  .listing-grade-box .grade { font-size: 20px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; }
+  .listing-grade-box .type { font-size: 9px; opacity: .65; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .listing-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .listing-meta { font-size: 12px; opacity: .65; font-family: 'IBM Plex Mono', monospace; margin-bottom: 6px; }
+  .source-url-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .source-url-label { font-size: 10px; font-weight: 700; color: #6E9CD4; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+  .source-url-val { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #8EC4FF; word-break: break-all; }
+  .source-url-val:hover { color: #fff; }
+  .score-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .score-item { font-size: 12px; color: #9E9588; }
+  .score-item b { font-family: 'IBM Plex Mono', monospace; color: #EFE9DF; }
+  .dup-flag { background: #FBE8E2; color: #D45B3C; border-radius: 999px; padding: 2px 10px; font-size: 11.5px; font-weight: 700; margin-left: 10px; }
+
+  .listing-body { padding: 24px; }
+
+  /* ── Card section dividers ── */
+  .card-section { margin-bottom: 24px; }
+  .card-section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #8B8475; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card-section-title::after { content: ''; flex: 1; height: 1px; background: #EDE8E0; }
+
+  /* ── Project info ── */
+  .project-box { background: #EEF3FD; border-radius: 12px; padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+  .proj-label { font-size: 10.5px; color: #4B6BAE; font-weight: 600; margin-bottom: 3px; }
+  .proj-value { font-size: 13px; color: #1A2A5E; font-weight: 600; }
+  .facilities-wrap { grid-column: 1 / -1; }
+  .fac-badge { display: inline-block; background: #D6E4FB; color: #1A2A5E; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; margin: 2px 3px 2px 0; }
+  .tenure-badge { display: inline-block; border-radius: 6px; padding: 2px 8px; font-size: 11.5px; font-weight: 700; }
+  .tenure-freehold { background: #D6E4FB; color: #1A2A5E; }
+  .tenure-leasehold { background: #FFF4D5; color: #8A5C00; }
+
+  /* ── Bilingual grid ── */
+  .bilingual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bi-card { border-radius: 12px; padding: 18px; }
+  .bi-card.en { background: #F0F4FD; }
+  .bi-card.th { background: #F6F2EB; }
+  .bi-lang-label { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #8B8475; font-family: 'IBM Plex Mono', monospace; margin-bottom: 14px; }
+  .field-label { font-size: 10.5px; color: #8B8475; margin-bottom: 3px; font-weight: 600; }
+  .field-value { font-size: 13px; color: #211E1A; margin-bottom: 12px; line-height: 1.6; }
+  .kw-badge { display: inline-block; background: #E8EDFD; color: #2B3FA0; border-radius: 6px; padding: 2px 9px; font-size: 11.5px; font-weight: 600; margin-bottom: 6px; }
+  .bi-card.th .kw-badge { background: #E4F4EE; color: #0A6B52; }
+  .sec-kw { display: inline-block; background: rgba(14,158,120,.1); color: #0A6B52; border-radius: 4px; padding: 2px 7px; font-size: 10.5px; margin: 2px 2px 2px 0; }
+  .location-narrative { background: rgba(14,158,120,.08); border-left: 3px solid #0E9E78; border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 12.5px; color: #1A3A30; line-height: 1.65; margin-bottom: 12px; }
+  .invest-label { font-size: 10px; font-weight: 800; color: #C99528; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
+  .investment-notes { background: rgba(201,149,40,.08); border: 1.5px solid rgba(201,149,40,.35); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #5C4200; line-height: 1.65; margin-bottom: 12px; }
+  .faq-item { margin-bottom: 10px; padding-left: 12px; border-left: 2px solid rgba(14,158,120,.4); }
+  .faq-q { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+  .faq-a { font-size: 11.5px; color: #6B655C; line-height: 1.5; }
+
+  /* ── Location research ── */
+  .loc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .loc-category { background: #EEF3FD; border-radius: 10px; padding: 12px 14px; }
+  .loc-cat-label { font-size: 10px; font-weight: 800; color: #4B6BAE; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+  .loc-item { font-size: 12px; color: #1A2A5E; padding: 4px 0; border-bottom: 1px solid rgba(75,107,174,.1); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .loc-item:last-child { border-bottom: none; }
+  .loc-item-name { flex: 1; }
+  .loc-dist { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #4B6BAE; white-space: nowrap; }
+  .neighborhood-box { background: #F0F4FD; border-radius: 10px; padding: 14px 18px; font-size: 13px; color: #1A2A5E; line-height: 1.65; font-style: italic; border-left: 3px solid #4B6BAE; }
+
+  /* ── Market comparison ── */
+  .market-box { background: #FFFAED; border: 1px solid rgba(201,149,40,.3); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+  .market-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+  .psqm-big { font-size: 24px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; color: #211E1A; }
+  .psqm-label { font-size: 11px; color: #8B8475; margin-top: 2px; }
+  .value-badge { border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; }
+  .value-value { background: #DCFAEF; color: #0A6B52; }
+  .value-fair { background: #FFF4D5; color: #A07A10; }
+  .value-premium { background: #FBE8E2; color: #D45B3C; }
+  .market-position { font-size: 12.5px; color: #5C4200; line-height: 1.65; margin-bottom: 14px; }
+  .nearby-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+  .nearby-card { border-radius: 8px; padding: 10px 12px; border: 1px solid; }
+  .nearby-cheaper { background: #FBE8E2; border-color: rgba(212,91,60,.25); }
+  .nearby-similar { background: #DCFAEF; border-color: rgba(14,158,120,.25); }
+  .nearby-pricier { background: #EEF3FD; border-color: rgba(75,107,174,.25); }
+  .nearby-project-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .nearby-detail { font-size: 11px; color: #6B655C; line-height: 1.5; }
+
+  /* ── Comparable units ── */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 8px; }
+  .comp-card { background: #F5F0EA; border-radius: 8px; padding: 10px 12px; border: 1px solid #E3DACB; }
+  .comp-size { font-size: 15px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; }
+  .comp-meta { font-size: 11px; color: #8B8475; margin: 2px 0 4px; }
+  .comp-price { font-size: 13px; font-weight: 700; color: #0E9E78; }
+  .comp-psqm { font-size: 10.5px; color: #8B8475; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+
+  /* ── Issues ── */
+  .issues-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .issues-box { border-radius: 10px; padding: 14px 16px; }
+  .issues-box.problems { background: #FBF0ED; }
+  .issues-box.actions { background: #E4F4EE; }
+  .issues-box-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+  .issues-box.problems .issues-box-title { color: #D45B3C; }
+  .issues-box.actions .issues-box-title { color: #0A6B52; }
+  .issue-item { font-size: 12.5px; color: #6B655C; margin-bottom: 5px; padding-left: 16px; position: relative; line-height: 1.5; }
+  .issue-item::before { position: absolute; left: 0; }
+  .issues-box.problems .issue-item::before { content: "•"; color: #D45B3C; }
+  .issues-box.actions .issue-item::before { content: "→"; color: #0E9E78; }
+  .missing-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .missing-badge { background: #FBE8E2; color: #D45B3C; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── Source URL strip ── */
+  .source-strip { background: #F5F0EA; border-top: 1px solid #E3DACB; padding: 10px 24px; display: flex; align-items: center; gap: 10px; }
+  .source-strip-label { font-size: 10px; font-weight: 800; color: #8B8475; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+  .source-strip-url { font-size: 11.5px; font-family: 'IBM Plex Mono', monospace; color: #4B6BAE; word-break: break-all; text-decoration: none; }
+  .source-strip-url:hover { text-decoration: underline; color: #2B3FA0; }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; }
+    .page { padding: 16px; max-width: 100%; }
+    .no-print { display: none !important; }
+    .listing-section { page-break-inside: avoid; }
+    .bilingual-grid { grid-template-columns: 1fr 1fr; }
+    .loc-grid { grid-template-columns: repeat(3, 1fr); }
+    .nearby-grid { grid-template-columns: repeat(3, 1fr); }
+    .comp-grid { grid-template-columns: repeat(4, 1fr); }
+    .source-strip-url { color: #2B3FA0; }
+  }
+  @media (max-width: 720px) {
+    .bilingual-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .issues-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">PS</div>
+    <div class="header-txt">
+      <h1 id="report-title">Listing Quality Report</h1>
+      <p id="report-sub">PropertyScout AI Agent Analysis · Bilingual (TH/EN)</p>
+    </div>
+    <div class="header-right">
+      <div class="date" id="report-date">Loading…</div>
+      <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+    </div>
+  </div>
+
+  <!-- Lang toggle -->
+  <div class="lang-bar no-print">
+    <span style="font-size:13px;color:#8B8475;font-weight:600">เลือกภาษา / Language:</span>
+    <button class="lang-btn active" id="btn-th" onclick="switchLang('th')">TH ภาษาไทย</button>
+    <button class="lang-btn" id="btn-en" onclick="switchLang('en')">EN English</button>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="val" id="kpi-total">—</div><div class="lbl" data-th="ประกาศทั้งหมด" data-en="Total Listings">ประกาศทั้งหมด</div></div>
+    <div class="kpi green"><div class="val" id="kpi-pass">—</div><div class="lbl" data-th="ผ่าน (≥75)" data-en="Pass (≥75)">ผ่าน (≥75)</div></div>
+    <div class="kpi yellow"><div class="val" id="kpi-borderline">—</div><div class="lbl" data-th="ขอบเขต (70–74)" data-en="Borderline (70–74)">ขอบเขต (70–74)</div></div>
+    <div class="kpi red"><div class="val" id="kpi-fail">—</div><div class="lbl" data-th="ไม่ผ่าน (<70)" data-en="Fail (<70)">ไม่ผ่าน (<70)</div></div>
+  </div>
+
+  <!-- Systemic banner -->
+  <div class="banner" id="systemic-banner">
+    <h3 data-th="ปัญหาระดับระบบ" data-en="Systemic Issues">ปัญหาระดับระบบ</h3>
+    <ul id="systemic-list"></ul>
+  </div>
+
+  <!-- Summary table -->
+  <h2 class="section-title" data-th="ตารางสรุป" data-en="Summary Table">ตารางสรุป</h2>
+  <div style="overflow-x:auto;margin-bottom:36px">
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th data-th="ID" data-en="ID">ID</th>
+          <th data-th="ชื่อประกาศ" data-en="Title">ชื่อประกาศ</th>
+          <th data-th="URL ต้นทาง" data-en="Source URL">URL ต้นทาง</th>
+          <th data-th="ประเภท" data-en="Type">ประเภท</th>
+          <th data-th="ราคา/เดือน" data-en="Price/mo">ราคา/เดือน</th>
+          <th data-th="กรรมสิทธิ์" data-en="Tenure">กรรมสิทธิ์</th>
+          <th data-th="คะแนน" data-en="Score">คะแนน</th>
+          <th data-th="เกรด" data-en="Grade">เกรด</th>
+          <th data-th="ผล" data-en="Result">ผล</th>
+        </tr>
+      </thead>
+      <tbody id="summary-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Detailed cards -->
+  <h2 class="section-title" data-th="รายละเอียดและ Copy แนะนำ" data-en="Detailed Results & Recommended Copy">รายละเอียดและ Copy แนะนำ</h2>
+  <div id="details-container"></div>
+
+</div>
+
+<script>
+let currentLang = 'th';
+let reportData = null;
+
+function switchLang(l) {
+  currentLang = l;
+  document.getElementById('btn-th').className = 'lang-btn' + (l === 'th' ? ' active' : '');
+  document.getElementById('btn-en').className = 'lang-btn' + (l === 'en' ? ' active' : '');
+  renderAll();
+}
+
+function updateLabels() {
+  document.querySelectorAll('[data-th][data-en]').forEach(el => {
+    el.textContent = currentLang === 'th' ? el.getAttribute('data-th') : el.getAttribute('data-en');
+  });
+}
+
+function safe(v, fb) { return (v !== undefined && v !== null && v !== '') ? v : (fb || '—'); }
+
+function distStr(item) {
+  if (item.distance_m !== undefined && item.distance_m !== null) {
+    return item.distance_m >= 1000 ? (item.distance_m/1000).toFixed(1)+'km' : item.distance_m+'m';
+  }
+  if (item.distance_km !== undefined && item.distance_km !== null) return item.distance_km+'km';
+  return '';
+}
+
+/* ── Summary table ── */
+function renderSummaryTable(listings) {
+  const tb = document.getElementById('summary-tbody');
+  tb.innerHTML = '';
+  const rTH = { PASS: 'ผ่าน', BORDERLINE: 'ขอบเขต', FAIL: 'ไม่ผ่าน' };
+  listings.forEach(l => {
+    const result = l.scores?.result || 'FAIL';
+    const bi = l.bilingual || {};
+    const title = currentLang === 'th'
+      ? (bi.th?.title_suggested || bi.en?.title_suggested || '#'+l.listing_id)
+      : (bi.en?.title_suggested || '#'+l.listing_id);
+    const isDup = l.duplicate_flag && l.duplicate_flag.includes('DUPLICATE');
+    const tenure = l.project?.tenure || '';
+    const tenureBadge = tenure
+      ? `<span class="tenure-badge ${tenure.toLowerCase()==='freehold'?'tenure-freehold':'tenure-leasehold'}">${tenure}</span>` : '—';
+    const shortUrl = (l.url||'').replace('https://','').replace('http://','');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B8475;white-space:nowrap">${l.listing_id}${isDup?'<span class="dup-flag">DUP</span>':''}</td>
+      <td style="max-width:230px;font-size:12.5px;font-weight:600">${title}</td>
+      <td style="max-width:200px"><a href="${l.url}" target="_blank" class="url-link">${shortUrl}</a></td>
+      <td>${currentLang==='th'?(l.type==='House'?'บ้าน':'คอนโด'):l.type}</td>
+      <td style="font-weight:700;color:#0E9E78;font-family:'IBM Plex Mono',monospace;white-space:nowrap">฿${(l.price_thb_month||0).toLocaleString()}</td>
+      <td>${tenureBadge}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-weight:700">${safe(l.scores?.total)}</td>
+      <td class="grade-cell">${safe(l.scores?.grade)}</td>
+      <td><span class="result-pill ${result.toLowerCase()}">${currentLang==='th'?(rTH[result]||result):result}</span></td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+/* ── Project info ── */
+function renderProject(proj) {
+  if (!proj) return '';
+  const tenure = proj.tenure || '';
+  const tenureBadge = tenure
+    ? `<span class="tenure-badge ${tenure.toLowerCase()==='freehold'?'tenure-freehold':'tenure-leasehold'}">${tenure}</span>` : '—';
+  const facs = (proj.facilities||[]).map(f=>`<span class="fac-badge">${f}</span>`).join('');
+  return `
+    <div class="card-section">
+      <div class="card-section-title" data-th="ข้อมูลโครงการ" data-en="Project Info">ข้อมูลโครงการ</div>
+      <div class="project-box">
+        <div><div class="proj-label">Developer</div><div class="proj-value">${safe(proj.developer)}</div></div>
+        <div><div class="proj-label">${currentLang==='th'?'ปีสร้าง':'Year Built'}</div><div class="proj-value">${safe(proj.year_built)}</div></div>
+        <div><div class="proj-label">${currentLang==='th'?'จำนวนชั้น':'Total Floors'}</div><div class="proj-value">${safe(proj.total_floors)}</div></div>
+        <div><div class="proj-label">${currentLang==='th'?'จำนวนยูนิต':'Total Units'}</div><div class="proj-value">${safe(proj.total_units)}</div></div>
+        <div><div class="proj-label">${currentLang==='th'?'กรรมสิทธิ์':'Tenure'}</div><div class="proj-value">${tenureBadge}</div></div>
+        ${proj.project_area_sqm?`<div><div class="proj-label">${currentLang==='th'?'พื้นที่โครงการ':'Project Area'}</div><div class="proj-value">${Number(proj.project_area_sqm).toLocaleString()} ตร.ม.</div></div>`:''}
+        ${facs?`<div class="facilities-wrap"><div class="proj-label" style="margin-bottom:6px">${currentLang==='th'?'สิ่งอำนวยความสะดวก':'Facilities'}</div>${facs}</div>`:''}
+      </div>
+    </div>`;
+}
+
+/* ── Bilingual content ── */
+function renderBilingual(bi) {
+  const enBi = bi?.en || {};
+  const thBi = bi?.th || {};
+
+  function side(b, isEn) {
+    const faqs = (b.faqs||[]).map(f=>`
+      <div class="faq-item">
+        <div class="faq-q">Q: ${f.question}</div>
+        <div class="faq-a">A: ${f.answer}</div>
+      </div>`).join('');
+    const secKws = (b.seo_secondary_keywords||[]).map(k=>`<span class="sec-kw">${k}</span>`).join('');
+    const locNarr = b.location_narrative
+      ? `<div class="field-label">${isEn?'Location Narrative':'สรุปทำเล'}</div><div class="location-narrative">${b.location_narrative}</div>` : '';
+    const invNotes = b.investment_notes
+      ? `<div class="invest-label">${isEn?'Investment & Expat Notes':'หมายเหตุนักลงทุน / ชาวต่างชาติ'}</div><div class="investment-notes">${b.investment_notes}</div>` : '';
+    return `
+      <div class="field-label">${isEn?'Suggested Title':'ชื่อที่แนะนำ'}</div>
+      <div class="field-value"><strong>${b.title_suggested||'—'}</strong></div>
+      <div class="field-label">${isEn?'Headline':'พาดหัว'}</div>
+      <div class="field-value">${b.headline||'—'}</div>
+      <div class="field-label">${isEn?'Description':'คำอธิบาย'}</div>
+      <div class="field-value" style="font-size:12.5px">${b.description||'—'}</div>
+      ${locNarr}
+      <div class="field-label">${isEn?'Primary SEO Keyword':'คีย์เวิร์ดหลัก'}</div>
+      <div class="kw-badge">${b.seo_primary_keyword||'—'}</div>
+      ${secKws?`<div style="margin-bottom:12px">${secKws}</div>`:''}
+      <div class="field-label">${isEn?'Meta Description':'Meta คำอธิบาย'}</div>
+      <div class="field-value" style="font-size:12px;color:#6B655C">${b.meta_description||'—'}</div>
+      ${invNotes}
+      <div class="field-label">${isEn?'FAQ Schema (AEO)':'FAQ Schema (สำหรับ AEO)'}</div>
+      ${faqs||'<div style="font-size:12px;color:#8B8475">—</div>'}
+    `;
+  }
+
+  return `
+    <div class="card-section">
+      <div class="card-section-title" data-th="Content ทั้งสองภาษา" data-en="Bilingual Content">Content ทั้งสองภาษา</div>
+      <div class="bilingual-grid">
+        <div class="bi-card en"><div class="bi-lang-label">🇬🇧 English Version</div>${side(enBi, true)}</div>
+        <div class="bi-card th"><div class="bi-lang-label">🇹🇭 ภาษาไทย</div>${side(thBi, false)}</div>
+      </div>
+    </div>`;
+}
+
+/* ── Location research ── */
+function renderLocation(loc) {
+  if (!loc) return '';
+  const cats = [
+    { key:'transit',       icon:'🚇', label:'Transit / รถไฟฟ้า' },
+    { key:'malls',         icon:'🛍', label:'Malls / ห้าง' },
+    { key:'markets',       icon:'🏪', label:'Markets / ตลาด' },
+    { key:'hospitals',     icon:'🏥', label:'Hospitals / โรงพยาบาล' },
+    { key:'airports',      icon:'✈️', label:'Airports / สนามบิน' },
+    { key:'expressways',   icon:'🛣', label:'Expressways / ทางด่วน' },
+    { key:'schools',       icon:'🎓', label:'Schools / โรงเรียน' },
+    { key:'parks_beaches', icon:'🌿', label:'Parks & Beaches' },
+  ];
+  let catsHtml = '';
+  cats.forEach(cfg => {
+    const items = loc[cfg.key];
+    if (!items || !items.length) return;
+    const rows = items.map(item => {
+      const d = distStr(item);
+      const note = item.travel_time_min ? ` · ~${item.travel_time_min} min` : (item.note ? ` (${item.note})` : '');
+      return `<div class="loc-item"><span class="loc-item-name">${item.name}${note}</span>${d?`<span class="loc-dist">${d}</span>`:''}</div>`;
+    }).join('');
+    catsHtml += `<div class="loc-category"><div class="loc-cat-label">${cfg.icon} ${cfg.label}</div>${rows}</div>`;
+  });
+  const nc = loc.neighborhood_character
+    ? `<div class="neighborhood-box">${loc.neighborhood_character}</div>` : '';
+  return `
+    <div class="card-section">
+      <div class="card-section-title" data-th="ข้อมูลทำเล" data-en="Location Research">ข้อมูลทำเล</div>
+      <div class="loc-grid">${catsHtml}</div>
+      ${nc}
+    </div>`;
+}
+
+/* ── Market comparison ── */
+function renderMarket(mkt, compUnits) {
+  let html = '';
+  if (mkt) {
+    const va = mkt.value_assessment || 'fair';
+    const vClass = va==='value'?'value-value':va==='premium'?'value-premium':'value-fair';
+    const vLabel = va==='value'?(currentLang==='th'?'คุ้มค่า':'Good Value')
+                 : va==='premium'?(currentLang==='th'?'พรีเมียม':'Premium')
+                 : (currentLang==='th'?'ราคาเหมาะสม':'Fair');
+    const pos = currentLang==='th' ? mkt.market_position_th : mkt.market_position_en;
+    const nearby = (mkt.nearby_projects||[]).map(np => {
+      const cls = np.vs_this_listing==='cheaper'?'nearby-cheaper':np.vs_this_listing==='pricier'?'nearby-pricier':'nearby-similar';
+      const tag = np.vs_this_listing==='cheaper'?(currentLang==='th'?'ถูกกว่า':'Cheaper')
+                : np.vs_this_listing==='pricier'?(currentLang==='th'?'แพงกว่า':'Pricier')
+                : (currentLang==='th'?'ใกล้เคียง':'Similar');
+      return `<div class="nearby-card ${cls}">
+        <div class="nearby-project-name">${np.project_name}</div>
+        <div class="nearby-detail">${np.unit_type||''} · ${np.distance_km}km</div>
+        <div class="nearby-detail">${np.rent_range_thb||''}</div>
+        <div class="nearby-detail" style="margin-top:4px;font-weight:700">${tag}</div>
+      </div>`;
+    }).join('');
+    const yieldLine = mkt.gross_yield_estimate
+      ? `<div style="font-size:12px;color:#8B8475;margin-top:10px">${currentLang==='th'?'ประมาณการ Gross Yield':'Est. Gross Yield'}: <b>${mkt.gross_yield_estimate}</b></div>` : '';
+    html += `
+      <div class="card-section">
+        <div class="card-section-title" data-th="เปรียบเทียบตลาด" data-en="Market Comparison">เปรียบเทียบตลาด</div>
+        <div class="market-box">
+          <div class="market-header">
+            <div>
+              <div class="psqm-big">฿${safe(mkt.this_unit_price_per_sqm)}<span style="font-size:14px;font-weight:600">/sqm</span></div>
+              <div class="psqm-label">${currentLang==='th'?'ราคาต่อ ตร.ม. ของห้องนี้':'This unit price/sqm'}</div>
+            </div>
+            <span class="value-badge ${vClass}">${vLabel}</span>
+            ${mkt.project_avg_price_per_sqm?`<div style="font-size:12px;color:#8B8475">${currentLang==='th'?'เฉลี่ยโครงการ':'Project avg'}: <b style="color:#211E1A">฿${mkt.project_avg_price_per_sqm}/sqm</b></div>`:''}
+          </div>
+          ${pos?`<div class="market-position">${pos}</div>`:''}
+          ${nearby?`<div class="nearby-grid">${nearby}</div>`:''}
+          ${yieldLine}
+        </div>
+      </div>`;
+  }
+  if (compUnits && compUnits.length > 0) {
+    const cards = compUnits.map(u=>`
+      <div class="comp-card">
+        <div class="comp-size">${u.size_sqm} ตร.ม.</div>
+        <div class="comp-meta">${u.bedrooms} ${currentLang==='th'?'นอน':'BR'}</div>
+        <div class="comp-price">฿${(u.price_thb_month||0).toLocaleString()}</div>
+        <div class="comp-psqm">฿${u.price_per_sqm||'—'}/sqm</div>
+      </div>`).join('');
+    html += `
+      <div class="card-section">
+        <div class="card-section-title" data-th="ยูนิตอื่นในโครงการ" data-en="Other Units in Project">ยูนิตอื่นในโครงการ</div>
+        <div class="comp-grid">${cards}</div>
+      </div>`;
+  }
+  return html;
+}
+
+/* ── Issues & actions ── */
+function renderIssues(l) {
+  const issues = l.issues?.[currentLang] || l.issues?.en || [];
+  const actions = l.priority_actions?.[currentLang] || l.priority_actions?.en || [];
+  const missing = l.missing_fields || [];
+  return `
+    <div class="card-section">
+      <div class="card-section-title" data-th="ปัญหาและสิ่งที่ต้องแก้" data-en="Issues & Actions">ปัญหาและสิ่งที่ต้องแก้</div>
+      <div class="issues-grid">
+        <div class="issues-box problems">
+          <div class="issues-box-title">${currentLang==='th'?'ปัญหาที่พบ':'Issues Found'}</div>
+          ${issues.map(i=>`<div class="issue-item">${i}</div>`).join('') || '<div style="font-size:12px;color:#8B8475">—</div>'}
+        </div>
+        <div class="issues-box actions">
+          <div class="issues-box-title">${currentLang==='th'?'สิ่งที่ต้องดำเนินการ':'Priority Actions'}</div>
+          ${actions.map(a=>`<div class="issue-item">${a}</div>`).join('') || '<div style="font-size:12px;color:#8B8475">—</div>'}
+        </div>
+      </div>
+      ${missing.length?`<div class="missing-row" style="margin-top:10px">
+        <span style="font-size:11px;font-weight:700;color:#8B8475;text-transform:uppercase;letter-spacing:.08em;margin-right:4px">${currentLang==='th'?'ข้อมูลที่ขาด:':'Missing:'}</span>
+        ${missing.map(f=>`<span class="missing-badge">${f}</span>`).join('')}
+      </div>`:''}
+    </div>`;
+}
+
+/* ── Detailed card render ── */
+function renderDetails(listings) {
+  const container = document.getElementById('details-container');
+  container.innerHTML = '';
+  const rTH = { PASS: 'ผ่าน', BORDERLINE: 'ขอบเขต', FAIL: 'ไม่ผ่าน' };
+  const rColors = { PASS: '#0E9E78', BORDERLINE: '#C99528', FAIL: '#D45B3C' };
+
+  listings.forEach(l => {
+    const result = l.scores?.result || 'FAIL';
+    const c = rColors[result] || '#211E1A';
+    const bi = l.bilingual || {};
+    const isDup = l.duplicate_flag && l.duplicate_flag.includes('DUPLICATE');
+    const titleText = currentLang==='th'
+      ? (bi.th?.title_suggested || bi.en?.title_suggested || '#'+l.listing_id)
+      : (bi.en?.title_suggested || '#'+l.listing_id);
+
+    const section = document.createElement('div');
+    section.className = 'listing-section';
+    section.innerHTML = `
+      <div class="listing-head" style="border-left:5px solid ${c}">
+        <div class="listing-grade-box">
+          <div class="grade" style="color:${c}">${safe(l.scores?.grade)}</div>
+          <div class="type">${l.type==='House'?'HOUSE':'CONDO'}</div>
+        </div>
+        <div style="flex:1">
+          <div class="listing-title">${titleText}${isDup?'<span class="dup-flag">⚠ DUPLICATE</span>':''}</div>
+          <div class="listing-meta">#${l.listing_id} · ${safe(l.district)} · ฿${(l.price_thb_month||0).toLocaleString()}/mo</div>
+          <div class="source-url-head">
+            <span class="source-url-label">${currentLang==='th'?'URL ต้นทาง':'Source URL'}</span>
+            <a href="${l.url}" target="_blank" class="source-url-val">${l.url}</a>
+          </div>
+          <div class="score-row">
+            <span class="score-item">${currentLang==='th'?'ความสมบูรณ์':'Completeness'}: <b>${safe(l.scores?.completeness)}</b></span>
+            <span class="score-item">${currentLang==='th'?'ความแม่นยำ':'Accuracy'}: <b>${safe(l.scores?.accuracy)}</b></span>
+            <span class="score-item">${currentLang==='th'?'ความน่าสนใจ':'Appeal'}: <b>${safe(l.scores?.appeal)}</b></span>
+            <span class="score-item" style="font-size:13px"><b style="color:${c}">${currentLang==='th'?'รวม':'Total'}: ${safe(l.scores?.total)} → <span style="background:${c};color:#fff;padding:2px 10px;border-radius:999px">${currentLang==='th'?(rTH[result]||result):result}</span></b></span>
+          </div>
+        </div>
+      </div>
+      <div class="listing-body">
+        ${renderProject(l.project)}
+        ${renderBilingual(l.bilingual)}
+        ${renderLocation(l.location_research)}
+        ${renderMarket(l.market_comparison, l.comparable_units)}
+        ${renderIssues(l)}
+      </div>
+      <div class="source-strip">
+        <span class="source-strip-label">${currentLang==='th'?'ลิงก์ประกาศต้นทาง / Source':'Source listing URL'}</span>
+        <a href="${l.url}" target="_blank" class="source-strip-url">${l.url}</a>
+      </div>`;
+    container.appendChild(section);
+  });
+}
+
+/* ── Render all ── */
+function renderAll() {
+  if (!reportData) return;
+  updateLabels();
+  const { meta, listings } = reportData;
+
+  document.getElementById('kpi-total').textContent = meta.total_listings;
+  document.getElementById('kpi-pass').textContent = meta.pass;
+  document.getElementById('kpi-borderline').textContent = meta.borderline;
+  document.getElementById('kpi-fail').textContent = meta.fail;
+
+  const d = new Date(meta.processed_at);
+  document.getElementById('report-date').textContent =
+    currentLang==='th'
+      ? d.toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})
+      : d.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'});
+
+  document.getElementById('systemic-list').innerHTML =
+    (meta.systemic_issues||[]).map(i=>`<li>${i}</li>`).join('');
+  document.getElementById('report-title').textContent =
+    currentLang==='th'?'รายงานคุณภาพ Listing':'Listing Quality Report';
+  document.getElementById('report-sub').textContent =
+    currentLang==='th'
+      ? 'PropertyScout · วิเคราะห์โดย AI Agents · ทั้งไทยและอังกฤษ'
+      : 'PropertyScout AI Agent Analysis · Bilingual (TH/EN)';
+
+  renderSummaryTable(listings);
+  renderDetails(listings);
+}
+
+/* ── Bootstrap — supports both embedded data and fetch ── */
+(function() {
+  function onData(data) { reportData = data; renderAll(); }
+  function onError() {
+    document.getElementById('details-container').innerHTML = `
+      <div style="padding:60px;text-align:center;color:#8B8475">
+        <div style="font-size:40px;margin-bottom:16px">📂</div>
+        <div style="font-size:16px;font-weight:700;color:#211E1A;margin-bottom:8px">No data found</div>
+        <div style="font-size:14px;line-height:1.6">Run the pipeline first — results will appear in <code>data/agent_results.json</code></div>
+      </div>`;
+  }
+  if (window.__REPORT_DATA__) {
+    onData(window.__REPORT_DATA__);
+  } else {
+    fetch('../data/agent_results.json')
+      .then(r => r.json())
+      .then(onData)
+      .catch(onError);
+  }
+})();
+</script>
+</body>
+</html>
