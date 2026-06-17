@@ -190,6 +190,3 @@ Final score = Completeness × 0.4  +  Accuracy × 0.3    +  Appeal × 0.3
 
 MIT — ใช้งาน แก้ไข และแจกจ่ายได้อย่างอิสระ / Free to use, modify, and distribute.
 
----
-
-*Built for [PropertyScout.co.th](https://propertyscout.co.th) · Powered by Claude AI*
