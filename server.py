@@ -43,14 +43,25 @@ def append_log(line):
         _state["log"].append(line)
 
 
-# ── Static file serving ────────────────────────────────────────────────────
+# ── Static file serving (no-cache for dev files) ───────────────────────────
+NO_CACHE_EXTS = {".html", ".jsx", ".js", ".css"}
+
+def _no_cache(response):
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
 @app.route("/")
 def root():
-    return send_from_directory(BASE, "AI Agent Platform.html")
+    return _no_cache(send_from_directory(BASE, "AI Agent Platform.html"))
 
 @app.route("/<path:path>")
 def static_files(path):
-    return send_from_directory(BASE, path)
+    resp = send_from_directory(BASE, path)
+    if Path(path).suffix in NO_CACHE_EXTS:
+        _no_cache(resp)
+    return resp
 
 
 # ── Upload CSV or Excel ────────────────────────────────────────────────────
