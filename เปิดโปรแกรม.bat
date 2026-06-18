@@ -2,8 +2,8 @@
 chcp 65001 >nul
 title PropertyScout AI — Starting...
 
-:: Check if port 8080 is already in use (Flask server running)
-netstat -an 2>nul | find "0.0.0.0:8080" >nul 2>&1
+:: Check if server is already LISTENING on port 8080
+netstat -ano 2>nul | findstr "LISTENING" | findstr ":8080" >nul 2>&1
 if %errorlevel%==0 (
     echo Server already running — opening browser...
     timeout /t 1 >nul
@@ -11,17 +11,29 @@ if %errorlevel%==0 (
     exit /b
 )
 
-:: Start Flask server (supports Upload & Run)
+:: Start Flask server — window visible so errors can be seen
 echo Starting PropertyScout AI Agent Platform...
-start "PropertyScout Server" /min cmd /c "python server.py"
+echo (You can minimise this window once the server shows "Running on http://...")
+echo.
+start "PropertyScout AI Server" cmd /k "python server.py"
 
-:: Wait for Flask to be ready
-timeout /t 3 >nul
+:: Wait for Flask to be ready (max ~12s, checks every second)
+set tries=0
+:waitloop
+timeout /t 1 >nul
+netstat -ano 2>nul | findstr "LISTENING" | findstr ":8080" >nul 2>&1
+if %errorlevel%==0 goto ready
+set /a tries+=1
+if %tries% lss 12 goto waitloop
 
-:: Open browser
+echo.
+echo WARNING: Server took too long to start.
+echo Check the server window for errors (Flask not installed?)
+echo Try running: pip install flask
+goto done
+
+:ready
+echo Server is ready!
 start "" "http://localhost:8080"
 
-echo.
-echo PropertyScout is running at http://localhost:8080
-echo Close the minimized window to stop the server.
-echo.
+:done
