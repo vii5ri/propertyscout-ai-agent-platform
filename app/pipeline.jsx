@@ -5,8 +5,8 @@ function RunPipeline({ lang }) {
   const T = {
     title:      { en: "Run AI Pipeline", th: "รัน AI Pipeline" },
     sub:        { en: "Upload a CSV of listing URLs and let the 11 agents process them", th: "อัปโหลด CSV ที่มี URL ประกาศ แล้วให้ 11 agents ประมวลผล" },
-    drop:       { en: "Drop your CSV here or click to browse", th: "วาง CSV ตรงนี้ หรือคลิกเพื่อเลือกไฟล์" },
-    dropHint:   { en: "One URL per row, header: url", th: "URL 1 บรรทัด 1 URL, header: url" },
+    drop:       { en: "Drop your CSV or Excel file here, or click to browse", th: "วางไฟล์ CSV หรือ Excel ตรงนี้ หรือคลิกเพื่อเลือกไฟล์" },
+    dropHint:   { en: "Accepts .csv and .xlsx — URLs must be in a column named 'url'", th: "รองรับ .csv และ .xlsx — URL ต้องอยู่ใน column ชื่อ 'url'" },
     ready:      { en: "Ready to run", th: "พร้อมรัน" },
     urls:       { en: "listings", th: "ประกาศ" },
     runBtn:     { en: "Run Pipeline", th: "รัน Pipeline" },
@@ -95,18 +95,23 @@ function RunPipeline({ lang }) {
 
   const handleFileObj = async (f) => {
     if (!f) return;
-    if (!f.name.toLowerCase().endsWith(".csv")) { setError("Please select a .csv file"); return; }
+    const ext = f.name.toLowerCase().split(".").pop();
+    if (!["csv","xlsx","xls"].includes(ext)) { setError("Please select a .csv or .xlsx file"); return; }
     setFile(f);
     setUploading(true);
     setDone(false);
     setError(null);
 
-    // Parse CSV client-side for preview
-    const text = await f.text();
-    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-    const dataLines = lines[0]?.toLowerCase().startsWith("url") ? lines.slice(1) : lines;
-    const parsed = dataLines.map(l => parseUrlHint(l.split(",")[0].trim())).filter(r => r.url.startsWith("http"));
-    setUrlRows(parsed);
+    // Preview: only parse CSV client-side (xlsx needs server); show placeholder for xlsx
+    if (ext === "csv") {
+      const text = await f.text();
+      const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      const dataLines = lines[0]?.toLowerCase().startsWith("url") ? lines.slice(1) : lines;
+      const parsed = dataLines.map(l => parseUrlHint(l.split(",")[0].trim())).filter(r => r.url.startsWith("http"));
+      setUrlRows(parsed);
+    } else {
+      setUrlRows([]);   // xlsx preview will be available after upload completes
+    }
 
     const fd = new FormData();
     fd.append("file", f);
@@ -186,7 +191,7 @@ function RunPipeline({ lang }) {
             transition: "all .2s",
           }}
         >
-          <input ref={inputRef} type="file" accept=".csv" style={{ display: "none" }}
+          <input ref={inputRef} type="file" accept=".csv,.xlsx,.xls" style={{ display: "none" }}
             onChange={e => handleFileObj(e.target.files[0])} />
           {uploading ? (
             <div style={{ color: "#0E9E78", fontWeight: 600 }}>Uploading…</div>
@@ -366,11 +371,23 @@ function RunPipeline({ lang }) {
         </div>
       )}
 
-      {/* CSV format hint */}
+      {/* Format hint */}
       {!running && !done && (
         <div style={{ background: "#F6F2EB", borderRadius: 12, padding: "16px 18px", fontSize: 13, color: "#6B655C", lineHeight: 1.7 }}>
-          <b style={{ color: "#211E1A" }}>รูปแบบ CSV / CSV format:</b>
-          <pre style={{ margin: "8px 0 0", fontFamily: "monospace", fontSize: 12, background: "#211E1A", color: "#A0C890", borderRadius: 8, padding: "10px 14px", overflowX: "auto" }}>{`url\nhttps://propertyscout.co.th/en/1-br-condo-...\nhttps://propertyscout.co.th/en/2-br-house-...`}</pre>
+          <b style={{ color: "#211E1A" }}>รูปแบบไฟล์ที่รองรับ / Supported formats:</b>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
+            <div>
+              <div style={{ fontWeight: 700, color: "#211E1A", marginBottom: 4 }}>📄 CSV</div>
+              <pre style={{ margin: 0, fontFamily: "monospace", fontSize: 11, background: "#211E1A", color: "#A0C890", borderRadius: 8, padding: "8px 12px", overflowX: "auto" }}>{`url\nhttps://propertyscout.co.th/...\nhttps://propertyscout.co.th/...`}</pre>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#211E1A", marginBottom: 4 }}>📊 Excel (.xlsx)</div>
+              <div style={{ background: "#211E1A", color: "#A0C890", borderRadius: 8, padding: "8px 12px", fontFamily: "monospace", fontSize: 11, lineHeight: 1.7 }}>
+                Column ชื่อ <b style={{color:"#7FD4A0"}}>"url"</b> หรือ <b style={{color:"#7FD4A0"}}>"URL"</b><br/>
+                มี URL ของ listing ใน column นั้น
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

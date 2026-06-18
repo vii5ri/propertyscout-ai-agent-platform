@@ -53,20 +53,55 @@ def static_files(path):
     return send_from_directory(BASE, path)
 
 
-# ── Upload CSV ─────────────────────────────────────────────────────────────
+# ── Upload CSV or Excel ────────────────────────────────────────────────────
 @app.route("/api/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
         return jsonify({"error": "No file field"}), 400
     f = request.files["file"]
-    if not f.filename.lower().endswith(".csv"):
-        return jsonify({"error": "Please upload a .csv file"}), 400
+    fname = f.filename.lower()
+    if not (fname.endswith(".csv") or fname.endswith(".xlsx") or fname.endswith(".xls")):
+        return jsonify({"error": "Please upload a .csv or .xlsx file"}), 400
+
     save_path = BASE / "data" / "uploaded_listings.csv"
     save_path.parent.mkdir(exist_ok=True)
-    f.save(str(save_path))
-    # count rows
+
+    if fname.endswith(".csv"):
+        f.save(str(save_path))
+    else:
+        # Excel → extract URLs from any column named 'url' or first column
+        import openpyxl, io
+        wb = openpyxl.load_workbook(io.BytesIO(f.read()), read_only=True, data_only=True)
+        ws = wb.active
+        rows = list(ws.iter_rows(values_only=True))
+        wb.close()
+
+        # Find URL column index
+        url_col = 0
+        if rows:
+            header = [str(c).lower().strip() if c else "" for c in rows[0]]
+            for i, h in enumerate(header):
+                if "url" in h or "link" in h or "http" in h:
+                    url_col = i
+                    break
+            data_rows = rows[1:] if any("url" in str(h).lower() or "link" in str(h).lower() for h in header) else rows
+
+        urls = []
+        for row in data_rows:
+            if row and url_col < len(row):
+                val = str(row[url_col]).strip() if row[url_col] else ""
+                if val.startswith("http"):
+                    urls.append(val)
+
+        # Write as CSV
+        with open(str(save_path), "w", encoding="utf-8", newline="") as out:
+            out.write("url\n")
+            for u in urls:
+                out.write(u + "\n")
+
+    # Count URLs
     lines = [l for l in save_path.read_text(encoding="utf-8-sig").splitlines() if l.strip()]
-    url_count = max(0, len(lines) - 1)   # subtract header
+    url_count = max(0, len(lines) - 1)
     return jsonify({"ok": True, "filename": f.filename, "url_count": url_count})
 
 
