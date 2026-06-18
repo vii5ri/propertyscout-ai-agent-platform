@@ -749,38 +749,25 @@ function ResultsView({ lang }) {
       {/* download section */}
       <DownloadSection data={data} lang={lang} />
 
-      {/* new upload zone */}
+      {/* link to Upload & Run page */}
       <div style={{ marginBottom: 20 }}>
-        {!uploadedUrls
-          ? (
-            <div style={{ background: '#fff', borderRadius: 14, border: '1px solid #E3DACB', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
-              <span style={{ fontSize: 20 }}>📂</span>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: 13.5, color: '#211E1A' }}>
-                  {lang === 'th' ? 'วิเคราะห์ listing ชุดใหม่' : 'Analyse a new batch'}
-                </div>
-                <div style={{ fontSize: 12.5, color: '#8B8475' }}>
-                  {lang === 'th' ? 'อัปโหลด CSV ใหม่เพื่อรันรอบถัดไป' : 'Upload a new CSV to start the next run'}
-                </div>
-              </div>
-              <label style={{
-                all: 'unset', cursor: 'pointer', padding: '8px 18px', borderRadius: 999,
-                background: '#0E9E78', color: '#fff', fontSize: 13, fontWeight: 600,
-              }}>
-                {lang === 'th' ? '+ อัปโหลด CSV' : '+ Upload CSV'}
-                <input type="file" accept=".csv,.xlsx,.xls" style={{ display: 'none' }}
-                  onChange={e => handleUrls(parseCSV(Array.from(e.target.files).map(f => {
-                    const r = new FileReader();
-                    r.readAsText(f, 'utf-8');
-                    return '';
-                  }).join('')), e.target.files[0]?.name || '')}
-                />
-              </label>
+        <div style={{ background: '#fff', borderRadius: 14, border: '1px solid #E3DACB', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
+          <span style={{ fontSize: 20 }}>📂</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 700, fontSize: 13.5, color: '#211E1A' }}>
+              {lang === 'th' ? 'วิเคราะห์ listing ชุดใหม่' : 'Analyse a new batch'}
             </div>
-          ) : (
-            <URLPreview urls={uploadedUrls} filename={uploadedFilename} lang={lang} onClear={() => setUploadedUrls(null)} />
-          )
-        }
+            <div style={{ fontSize: 12.5, color: '#8B8475' }}>
+              {lang === 'th' ? 'อัปโหลด CSV/Excel ใหม่เพื่อรันรอบถัดไป' : 'Upload a new CSV or Excel file to start the next run'}
+            </div>
+          </div>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('agp-nav', { detail: 'run' }))}
+            style={{ all: 'unset', cursor: 'pointer', padding: '8px 18px', borderRadius: 999, background: '#0E9E78', color: '#fff', fontSize: 13, fontWeight: 600 }}
+          >
+            {lang === 'th' ? '+ อัปโหลด & รัน' : '+ Upload & Run'}
+          </button>
+        </div>
       </div>
 
       {/* systemic issues */}

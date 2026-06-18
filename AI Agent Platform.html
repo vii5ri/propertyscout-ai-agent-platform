@@ -186,6 +186,13 @@ function App() {
   const go = (v) => { setView(v); setAgentId(null); window.scrollTo(0, 0); };
   const openAgent = (id) => { setAgentId(id); window.scrollTo(0, 0); };
 
+  // Allow child components to navigate via: window.dispatchEvent(new CustomEvent('agp-nav', { detail: 'run' }))
+  useEffect(() => {
+    const handler = (e) => go(e.detail);
+    window.addEventListener('agp-nav', handler);
+    return () => window.removeEventListener('agp-nav', handler);
+  }, []);
+
   const NAV = [
     { g: { en: "Overview", th: "ภาพรวม" }, items: [
       { id: "dashboard", label: T.nav_dash, Ico: IconGrid },
