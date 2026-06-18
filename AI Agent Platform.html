@@ -155,6 +155,7 @@
 <script type="text/babel" src="app/pixel.jsx"></script>
 <script type="text/babel" src="app/pixel-engine.jsx"></script>
 <script type="text/babel" src="app/results.jsx"></script>
+<script type="text/babel" src="app/pipeline.jsx"></script>
 
 <script type="text/babel">
 const { useState, useEffect } = React;
@@ -170,6 +171,7 @@ function IconSkills() { return (<svg width="18" height="18" viewBox="0 0 18 18" 
 function IconMemory() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="5" r="2.1" stroke="currentColor" strokeWidth="1.5"/><circle cx="4.5" cy="13" r="2.1" stroke="currentColor" strokeWidth="1.5"/><circle cx="13.5" cy="13" r="2.1" stroke="currentColor" strokeWidth="1.5"/><path d="M7.7 6.7 5.8 11M10.3 6.7 12.2 11M6.6 13h4.8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>); }
 function IconSettings() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="2.3" stroke="currentColor" strokeWidth="1.6"/><path d="M9 1.8v2M9 14.2v2M16.2 9h-2M3.8 9h-2M14 4l-1.4 1.4M5.4 12.6 4 14M14 14l-1.4-1.4M5.4 5.4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>); }
 function IconResults() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13.5h2.5v-5H3v5zM7.75 13.5h2.5V4.5h-2.5v9zM12.5 13.5H15V8h-2.5v5.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>); }
+function IconUpload() { return (<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 11.5V3M6 6l3-3 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 13.5v.5a1 1 0 001 1h10a1 1 0 001-1v-.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>); }
 
 function App() {
   const [lang, setLang] = useState(() => LS("agp_lang", "th"));
@@ -199,6 +201,7 @@ function App() {
       { id: "memory", label: { en: "Memory Graph", th: "กราฟความจำ" }, Ico: IconMemory },
     ]},
     { g: { en: "Results", th: "ผลวิเคราะห์" }, items: [
+      { id: "run", label: { en: "Upload & Run", th: "อัปโหลด & รัน" }, Ico: IconUpload },
       { id: "results", label: { en: "Listing Results", th: "ผล Listing" }, Ico: IconResults },
     ]},
     { g: { en: "System", th: "ระบบ" }, items: [
@@ -216,6 +219,7 @@ function App() {
       case "skills": return <SkillsView lang={lang} onAgent={openAgent} />;
       case "memory": return <MemoryGraph lang={lang} onAgent={openAgent} />;
       case "settings": return <Settings sim={sim} lang={lang} setLang={setLang} />;
+      case "run": return <RunPipeline lang={lang} />;
       case "results": return <ResultsView lang={lang} />;
       default: return <Dashboard sim={sim} lang={lang} onAgent={openAgent} />;
     }

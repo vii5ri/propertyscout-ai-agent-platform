@@ -743,14 +743,35 @@ def save_details_csv(listings, path):
 # MAIN
 # ──────────────────────────────────────────────
 
-def main():
-    # ── 1. Check arguments
-    if len(sys.argv) < 2:
-        print("Usage: python runner/run_agents.py <path_to_csv>")
-        print("Example: python runner/run_agents.py propertyscout.csv")
-        sys.exit(1)
+def parse_url_hints(url):
+    """Extract listing_mode (sale/rent) and property_type from URL slug."""
+    slug = url.lower()
+    mode = "rent"
+    if "for-sale" in slug or "/sale/" in slug:
+        mode = "sale"
+    elif "for-rent" in slug or "/rent/" in slug:
+        mode = "rent"
 
-    csv_path = sys.argv[1]
+    ptype = "condo"
+    for t in ["villa", "house", "townhouse", "townhome", "shophouse", "land", "office"]:
+        if t in slug:
+            ptype = t
+            break
+
+    return {"listing_mode": mode, "property_type": ptype}
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="PropertyScout AI Agent Pipeline")
+    parser.add_argument("csv_file", help="Path to CSV file with listing URLs")
+    parser.add_argument("--limit", type=int, default=0,
+                        help="Process only first N listings (0 = all)")
+    args = parser.parse_args()
+
+    csv_path = args.csv_file
+    limit    = args.limit
+
     if not os.path.exists(csv_path):
         print(f"Error: file not found: {csv_path}")
         sys.exit(1)
@@ -776,7 +797,12 @@ def main():
     if not urls:
         print("Error: no URLs found in CSV. Ensure URLs are in the first column.")
         sys.exit(1)
-    print(f"   Found {len(urls)} URLs\n")
+    print(f"   Found {len(urls)} URLs")
+
+    if limit > 0 and limit < len(urls):
+        print(f"   Limiting to first {limit} (--limit {limit})")
+        urls = urls[:limit]
+    print()
 
     # ── 4. Process each listing
     listings = []
