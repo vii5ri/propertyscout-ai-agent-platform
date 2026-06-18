@@ -80,29 +80,34 @@ def upload():
     if fname.endswith(".csv"):
         f.save(str(save_path))
     else:
-        # Excel → extract URLs from any column named 'url' or first column
+        # Excel → extract URLs from the correct column
         import openpyxl, io
         wb = openpyxl.load_workbook(io.BytesIO(f.read()), read_only=True, data_only=True)
         ws = wb.active
         rows = list(ws.iter_rows(values_only=True))
         wb.close()
 
-        # Find URL column index
-        url_col = 0
+        urls = []
         if rows:
-            header = [str(c).lower().strip() if c else "" for c in rows[0]]
+            # Find column whose header suggests it contains URLs
+            # Accepts: url, link, href, http (covers "w-full href", "URL", "link" etc.)
+            URL_KEYWORDS = ["url", "link", "href", "http"]
+            header = [str(c).strip() if c else "" for c in rows[0]]
+            url_col = 0
             for i, h in enumerate(header):
-                if "url" in h or "link" in h or "http" in h:
+                if any(k in h.lower() for k in URL_KEYWORDS):
                     url_col = i
                     break
-            data_rows = rows[1:] if any("url" in str(h).lower() or "link" in str(h).lower() for h in header) else rows
 
-        urls = []
-        for row in data_rows:
-            if row and url_col < len(row):
-                val = str(row[url_col]).strip() if row[url_col] else ""
-                if val.startswith("http"):
-                    urls.append(val)
+            # Skip header row if the first cell in url_col isn't an http URL
+            first_val = str(rows[0][url_col]).strip() if rows[0] and url_col < len(rows[0]) and rows[0][url_col] else ""
+            data_rows = rows[1:] if not first_val.startswith("http") else rows
+
+            for row in data_rows:
+                if row and url_col < len(row) and row[url_col]:
+                    val = str(row[url_col]).strip()
+                    if val.startswith("http"):
+                        urls.append(val)
 
         # Write as CSV
         with open(str(save_path), "w", encoding="utf-8", newline="") as out:
